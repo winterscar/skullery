@@ -70,3 +70,27 @@
                                  :equipment   {:type (list :RecipeEquipmentInput)}
                                  :steps {:type (list :StepInput)}}
                           :resolve :mutation-add-recipe}}}
+
+;; :mutations {:add-recipe nil
+;;             :edit-recipe   nil
+;;             :delete-recipe nil
+;;             :add-steps      nil
+;;             :edit-step     nil
+;;             :delete-step   nil
+;;             :add-ingredients nil
+;;             :edit-ingredient nil
+;;             :delete-ingredient nil
+;;             :add-recipe-ingredients nil
+;;             :edit-recipe-ingredient nil
+;;             :delete-recipe-ingredient nil
+;;             :add-step-ingredients nil
+;;             :edit-step-ingredient nil
+;;             :delete-step-ingredient nil
+;;             :add-equipment nil
+;;             :edit-equipment nil
+;;             :delete-equipment nil
+;;             :add-recipe-equipment nil
+;;             :delete-recipe-equipment nil
+;;             :add-conversions nil
+;;             :edit-conversion nil
+;;             :delete-conversion nil}
