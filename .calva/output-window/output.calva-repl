@@ -1,0 +1,2939 @@
+clj꞉skullery.db꞉> 
+(initial-db ds)
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS Conversions (\000d\000a  id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a  FOREIGN KEY (ingredient_id) REFERENCES Ingredients(id),\000d\000a  [*]to ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT'),\000d\000a  from ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT')\000d\000a  to_note VARCHAR,\000d\000a  from_note VARCHAR,\000d\000a  multiplier DOUBLE PRECISION\000d\000a);"; expected "identifier"; SQL statement:
+; CREATE TABLE IF NOT EXISTS Conversions (
+;   id INT AUTO_INCREMENT PRIMARY KEY,
+;   FOREIGN KEY (ingredient_id) REFERENCES Ingredients(id),
+;   to ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT'),
+;   from ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT')
+;   to_note VARCHAR,
+;   from_note VARCHAR,
+;   multiplier DOUBLE PRECISION
+; ); [42001-214]
+clj꞉skullery.db꞉> 
+(initial-db ds)
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS Conversions (\000d\000a  id INT AUTO_INCREMENT PRIMARY KEY,\000d\000a  FOREIGN KEY (ingredient_id) REFERENCES Ingredients(id),\000d\000a  [*]to ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT'),\000d\000a  from ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT'),\000d\000a  to_note VARCHAR,\000d\000a  from_note VARCHAR,\000d\000a  multiplier DOUBLE PRECISION\000d\000a);"; expected "identifier"; SQL statement:
+; CREATE TABLE IF NOT EXISTS Conversions (
+;   id INT AUTO_INCREMENT PRIMARY KEY,
+;   FOREIGN KEY (ingredient_id) REFERENCES Ingredients(id),
+;   to ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT'),
+;   from ENUM('MASS', 'VOLUME', 'LENGTH', 'UNIT'),
+;   to_note VARCHAR,
+;   from_note VARCHAR,
+;   multiplier DOUBLE PRECISION
+; ); [42001-214]
+clj꞉skullery.db꞉> 
+(initial-db ds)
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "INGREDIENT_ID" not found; SQL statement:
+; CREATE TABLE IF NOT EXISTS Ingredients (
+;   id INT AUTO_INCREMENT PRIMARY KEY,
+;   name VARCHAR,
+;   unit_name VARCHAR,
+;   unit_name_plural VARCHAR
+; ) [42122-214]
+clj꞉skullery.db꞉> 
+(initial-db ds)
+[#:next.jdbc{:update-count 0}]
+clj꞉skullery.db꞉> 
+(jdbc/execute! ds ["SHOW TABLES"])
+[#:TABLES{:TABLE_NAME "CONVERSIONS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "INGREDIENTS", :TABLE_SCHEMA "PUBLIC"}]
+clj꞉skullery.db꞉> 
+(initial-db ds)
+[#:next.jdbc{:update-count 0}]
+clj꞉skullery.db꞉> 
+(jdbc/execute! ds ["SHOW TABLES"])
+[#:TABLES{:TABLE_NAME "CONVERSIONS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "EQUIPMENT", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "INGREDIENTS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "RECIPEEQUIPMENT", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "RECIPEINGREDIENTS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "RECIPES", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "STEPINGREDIENTS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "STEPS", :TABLE_SCHEMA "PUBLIC"}]
+clj꞉skullery.db꞉> 
+; Evaluating file: server.clj
+#'skullery.server/-main
+clj꞉skullery.server꞉> 
+(def serv (run-dev))
+
+Creating your [DEV] server...
+; Execution error (BindException) at sun.nio.ch.Net/bind0 (Net.java:-2).
+; Address already in use
+clj꞉skullery.server꞉> 
+#'skullery.schema/resolve-recipe-equipment
+clj꞉skullery.schema꞉> 
+; Syntax error compiling at (src/skullery/schema.clj:69:7).
+; Unable to resolve symbol: resolve-recipes in this context
+clj꞉skullery.schema꞉> 
+; Syntax error compiling at (src/skullery/schema.clj:69:7).
+; Unable to resolve symbol: resolve-recipes in this context
+clj꞉skullery.schema꞉> 
+#'skullery.schema/resolve-recipes
+clj꞉skullery.schema꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+(http/stop serv)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:81:1).
+; No such namespace: http
+clj꞉skullery.schema꞉> 
+; Evaluating file: server.clj
+#'skullery.server/-main
+clj꞉skullery.server꞉> 
+(http/stop serv)
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉skullery.server꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉skullery.server꞉> 
+; Jack-in done.
+clj꞉skullery.server꞉> 
+(def serv (run-dev))
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+#'skullery.schema/resolve-recipe
+clj꞉skullery.schema꞉> 
+; Syntax error compiling at (src/skullery/db.clj:26:5).
+; No such namespace: jdbc
+clj꞉skullery.db꞉> 
+; Evaluating file: db.clj
+; WARNING: set already refers to: #'clojure.core/set in namespace: skullery.db, being replaced by: #'honey.sql.helpers/set
+; WARNING: into already refers to: #'clojure.core/into in namespace: skullery.db, being replaced by: #'honey.sql.helpers/into
+; WARNING: group-by already refers to: #'clojure.core/group-by in namespace: skullery.db, being replaced by: #'honey.sql.helpers/group-by
+; WARNING: update already refers to: #'clojure.core/update in namespace: skullery.db, being replaced by: #'honey.sql.helpers/update
+; WARNING: partition-by already refers to: #'clojure.core/partition-by in namespace: skullery.db, being replaced by: #'honey.sql.helpers/partition-by
+; WARNING: for already refers to: #'clojure.core/for in namespace: skullery.db, being replaced by: #'honey.sql.helpers/for
+; WARNING: filter already refers to: #'clojure.core/filter in namespace: skullery.db, being replaced by: #'honey.sql.helpers/filter
+; Syntax error compiling at (src/skullery/db.clj:53:1).
+; Unable to resolve symbol: eg-recipe in this context
+; Evaluation of file db.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉skullery.db꞉> 
+; Evaluating file: db.clj
+; WARNING: set already refers to: #'clojure.core/set in namespace: skullery.db, being replaced by: #'honey.sql.helpers/set
+; WARNING: into already refers to: #'clojure.core/into in namespace: skullery.db, being replaced by: #'honey.sql.helpers/into
+; WARNING: group-by already refers to: #'clojure.core/group-by in namespace: skullery.db, being replaced by: #'honey.sql.helpers/group-by
+; WARNING: update already refers to: #'clojure.core/update in namespace: skullery.db, being replaced by: #'honey.sql.helpers/update
+; WARNING: partition-by already refers to: #'clojure.core/partition-by in namespace: skullery.db, being replaced by: #'honey.sql.helpers/partition-by
+; WARNING: for already refers to: #'clojure.core/for in namespace: skullery.db, being replaced by: #'honey.sql.helpers/for
+; WARNING: filter already refers to: #'clojure.core/filter in namespace: skullery.db, being replaced by: #'honey.sql.helpers/filter
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+; Evaluating file: db.clj
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+nil
+clj꞉skullery.schema꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+(resolve-recipe nil (:id 0) nil)
+[]
+clj꞉skullery.db꞉> 
+[]
+clj꞉skullery.db꞉> 
+(resolve-recipe nil (:id 0) nil)
+[]
+clj꞉skullery.db꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+(http/stop serv)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:158:1).
+; No such namespace: http
+clj꞉skullery.schema꞉> 
+; Evaluating file: server.clj
+#'skullery.server/-main
+clj꞉skullery.server꞉> 
+(http/stop serv)
+{:io.pedestal.http/port 8888,
+ :io.pedestal.http/service-fn #function[io.pedestal.http.impl.servlet-interceptor/interceptor-service-fn/fn--23502],
+ :io.pedestal.http/host "localhost",
+ :io.pedestal.http/secure-headers nil,
+ :io.pedestal.http/type :jetty,
+ :io.pedestal.http/start-fn #function[io.pedestal.http.jetty/server/fn--26095],
+ :io.pedestal.http/container-options
+ {:context-configurator #function[com.walmartlabs.lacinia.pedestal.internal/add-subscriptions-support/fn--25009]},
+ :env :dev,
+ :io.pedestal.http/interceptors
+ [{:name :io.pedestal.http/log-request,
+   :enter #function[io.pedestal.interceptor.helpers/on-request/fn--20396],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http/not-found,
+   :enter nil,
+   :leave #function[io.pedestal.interceptor.helpers/after/fn--20360],
+   :error nil}
+  {:name :io.pedestal.http.ring-middlewares/content-type-interceptor,
+   :enter nil,
+   :leave #function[io.pedestal.interceptor.helpers/after/fn--20360],
+   :error nil}
+  {:name :io.pedestal.http.route/query-params,
+   :enter #function[io.pedestal.http.route/fn--21268],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/path-params-decoder,
+   :enter #function[io.pedestal.http.route/fn--21270],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/method-param,
+   :enter #function[io.pedestal.http.route/method-param/fn--21273],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/router,
+   :enter #function[io.pedestal.http.route/eval21254/fn--21255/fn--21256],
+   :leave nil,
+   :error nil}],
+ :io.pedestal.http/routes
+ #{["/ide"
+    :get
+    #function[com.walmartlabs.lacinia.pedestal2/graphiql-ide-handler/fn--25043]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-ide]
+   ["/assets/graphiql/*path"
+    :head
+    #function[com.walmartlabs.lacinia.pedestal2/graphiql-asset-routes/asset-head-handler--25039]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-head-assets]
+   ["/api"
+    :post
+    [{:name :com.walmartlabs.lacinia.pedestal2/initialize-tracing,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25030],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/json-response,
+      :enter nil,
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-json-response],
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/error-response,
+      :enter nil,
+      :leave nil,
+      :error #function[com.walmartlabs.lacinia.pedestal.internal/on-error-error-response]}
+     {:name :com.walmartlabs.lacinia.pedestal2/body-data,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25016],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/graphql-data,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25019],
+      :leave #function[com.walmartlabs.lacinia.pedestal2/clear-graphql-data],
+      :error #function[com.walmartlabs.lacinia.pedestal2/fn--25022]}
+     {:name :com.walmartlabs.lacinia.pedestal2/status-conversion,
+      :enter nil,
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-status-conversion],
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/missing-query,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25024],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/query-parser,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/query-parser-interceptor/fn--25026],
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-query-parser],
+      :error #function[com.walmartlabs.lacinia.pedestal.internal/on-error-query-parser]}
+     {:name :com.walmartlabs.lacinia.pedestal2/disallow-subscriptions,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-disallow-subscriptions],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/prepare-query,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-prepare-query],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/inject-app-context,
+      :enter #function[com.walmartlabs.lacinia.pedestal.interceptors/on-enter-app-context-interceptor/fn--11416],
+      :leave #function[com.walmartlabs.lacinia.pedestal.interceptors/on-leave-app-context-interceptor],
+      :error #function[com.walmartlabs.lacinia.pedestal.interceptors/on-error-app-context-interceptor]}
+     {:name :com.walmartlabs.lacinia.pedestal2/enable-tracing,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25032],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/query-executor,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-query-executor/fn--24983],
+      :leave nil,
+      :error nil}]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphql-api]
+   ["/assets/graphiql/*path"
+    :get
+    #function[ring.middleware.not-modified/wrap-not-modified/fn--22301]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-get-assets]},
+ :io.pedestal.http/servlet
+ #object[io.pedestal.http.servlet.FnServlet 0x6cb8d7d4 "io.pedestal.http.servlet.FnServlet@6cb8d7d4"],
+ :io.pedestal.http/server
+ #object[org.eclipse.jetty.server.Server 0x611b33b5 "Server@611b33b5{STOPPED}[9.4.44.v20210927]"],
+ :io.pedestal.http/join? false,
+ :io.pedestal.http/stop-fn #function[io.pedestal.http.jetty/server/fn--26097]}
+clj꞉skullery.server꞉> 
+(def serv (run-dev))
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+; Evaluating file: db.clj
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+(jdbc/execute! ds (sql/format {:insert-into :recipes
+                               :values [{:name "Eggs Benedict"}]}))
+[#:next.jdbc{:update-count 1}]
+clj꞉skullery.db꞉> 
+(jdbc/execute! ds (sql/format {:select :* :from :recipes}))
+[#:RECIPES{:ID 1, :NAME "Eggs Benedict"}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+(resolve-recipe nil (:id 1) nil)
+nil
+clj꞉skullery.db꞉> 
+(resolve-recipe nil (:id 0) nil)
+nil
+clj꞉skullery.db꞉> 
+(resolve-recipe nil (:id 1) nil)
+nil
+clj꞉skullery.db꞉> 
+(jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+#:RECIPES{:ID 1, :NAME "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+    :NAME)
+nil
+clj꞉skullery.db꞉> 
+(jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+#:RECIPES{:ID 1, :NAME "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+    :ID)
+nil
+clj꞉skullery.db꞉> 
+(jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+#:RECIPES{:ID 1, :NAME "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+    :RECIPES)
+nil
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+    :RECIPES.ID)
+nil
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+    :RECIPES/ID)
+1
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select :* :from :recipes}))
+    :RECIPES/NAME)
+"Eggs Benedict"
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+(resolve-recipe nil (:id 1) nil)
+nil
+clj꞉skullery.db꞉> 
+(jdbc/execute-one! ds (sql/format {:select [:id :name]
+                                   :from   [:recipes]
+                                   :where  [:= :recipes.id 1]}))
+#:RECIPES{:ID 1, :NAME "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select [:id :name]
+                                       :from   [:recipes]
+                                       :where  [:= :recipes.id (:id args)]}))
+    :RECIPES/NAME)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:356:64).
+; Unable to resolve symbol: args in this context
+clj꞉skullery.db꞉> 
+(-> (jdbc/execute-one! ds (sql/format {:select [:id :name]
+                                       :from   [:recipes]
+                                       :where  [:= :recipes.id 1]}))
+    :RECIPES/NAME)
+"Eggs Benedict"
+clj꞉skullery.db꞉> 
+(resolve-recipe nil {:id 1} nil)
+{:id 1, :name "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+; Evaluating file: server.clj
+#'skullery.server/-main
+clj꞉skullery.server꞉> 
+(http/stop serv)
+{:io.pedestal.http/port 8888,
+ :io.pedestal.http/service-fn #function[io.pedestal.http.impl.servlet-interceptor/interceptor-service-fn/fn--23502],
+ :io.pedestal.http/host "localhost",
+ :io.pedestal.http/secure-headers nil,
+ :io.pedestal.http/type :jetty,
+ :io.pedestal.http/start-fn #function[io.pedestal.http.jetty/server/fn--26095],
+ :io.pedestal.http/container-options
+ {:context-configurator #function[com.walmartlabs.lacinia.pedestal.internal/add-subscriptions-support/fn--25009]},
+ :env :dev,
+ :io.pedestal.http/interceptors
+ [{:name :io.pedestal.http/log-request,
+   :enter #function[io.pedestal.interceptor.helpers/on-request/fn--20396],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http/not-found,
+   :enter nil,
+   :leave #function[io.pedestal.interceptor.helpers/after/fn--20360],
+   :error nil}
+  {:name :io.pedestal.http.ring-middlewares/content-type-interceptor,
+   :enter nil,
+   :leave #function[io.pedestal.interceptor.helpers/after/fn--20360],
+   :error nil}
+  {:name :io.pedestal.http.route/query-params,
+   :enter #function[io.pedestal.http.route/fn--21268],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/path-params-decoder,
+   :enter #function[io.pedestal.http.route/fn--21270],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/method-param,
+   :enter #function[io.pedestal.http.route/method-param/fn--21273],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/router,
+   :enter #function[io.pedestal.http.route/eval21254/fn--21255/fn--21256],
+   :leave nil,
+   :error nil}],
+ :io.pedestal.http/routes
+ #{["/ide"
+    :get
+    #function[com.walmartlabs.lacinia.pedestal2/graphiql-ide-handler/fn--25043]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-ide]
+   ["/assets/graphiql/*path"
+    :head
+    #function[com.walmartlabs.lacinia.pedestal2/graphiql-asset-routes/asset-head-handler--25039]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-head-assets]
+   ["/api"
+    :post
+    [{:name :com.walmartlabs.lacinia.pedestal2/initialize-tracing,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25030],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/json-response,
+      :enter nil,
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-json-response],
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/error-response,
+      :enter nil,
+      :leave nil,
+      :error #function[com.walmartlabs.lacinia.pedestal.internal/on-error-error-response]}
+     {:name :com.walmartlabs.lacinia.pedestal2/body-data,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25016],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/graphql-data,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25019],
+      :leave #function[com.walmartlabs.lacinia.pedestal2/clear-graphql-data],
+      :error #function[com.walmartlabs.lacinia.pedestal2/fn--25022]}
+     {:name :com.walmartlabs.lacinia.pedestal2/status-conversion,
+      :enter nil,
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-status-conversion],
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/missing-query,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25024],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/query-parser,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/query-parser-interceptor/fn--25026],
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-query-parser],
+      :error #function[com.walmartlabs.lacinia.pedestal.internal/on-error-query-parser]}
+     {:name :com.walmartlabs.lacinia.pedestal2/disallow-subscriptions,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-disallow-subscriptions],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/prepare-query,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-prepare-query],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/inject-app-context,
+      :enter #function[com.walmartlabs.lacinia.pedestal.interceptors/on-enter-app-context-interceptor/fn--11416],
+      :leave #function[com.walmartlabs.lacinia.pedestal.interceptors/on-leave-app-context-interceptor],
+      :error #function[com.walmartlabs.lacinia.pedestal.interceptors/on-error-app-context-interceptor]}
+     {:name :com.walmartlabs.lacinia.pedestal2/enable-tracing,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--25032],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/query-executor,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-query-executor/fn--24983],
+      :leave nil,
+      :error nil}]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphql-api]
+   ["/assets/graphiql/*path"
+    :get
+    #function[ring.middleware.not-modified/wrap-not-modified/fn--22301]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-get-assets]},
+ :io.pedestal.http/servlet
+ #object[io.pedestal.http.servlet.FnServlet 0x6b2cb99a "io.pedestal.http.servlet.FnServlet@6b2cb99a"],
+ :io.pedestal.http/server
+ #object[org.eclipse.jetty.server.Server 0x2edbb38e "Server@2edbb38e{STOPPED}[9.4.44.v20210927]"],
+ :io.pedestal.http/join? false,
+ :io.pedestal.http/stop-fn #function[io.pedestal.http.jetty/server/fn--26097]}
+clj꞉skullery.server꞉> 
+(http/stop serv)#'skullery.server/restart!
+clj꞉skullery.server꞉> 
+(restart!)
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+#:next.jdbc{:update-count 1}
+clj꞉skullery.db꞉> 
+; Execution error (JdbcSQLIntegrityConstraintViolationException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:508).
+; Referential integrity constraint violation: "CONSTRAINT_3F: PUBLIC.CONVERSIONS FOREIGN KEY(INGREDIENT_ID) REFERENCES PUBLIC.INGREDIENTS(ID) (0)"; SQL statement:
+; INSERT INTO conversions (convert_from, convert_to, multiplier, ingredient_id) VALUES (?, ?, ?, ?) [23506-214]
+clj꞉skullery.db꞉> 
+#:next.jdbc{:update-count 1}
+clj꞉skullery.db꞉> 
+#:next.jdbc{:update-count 1}
+clj꞉skullery.db꞉> 
+#'skullery.schema/resolve-recipe-ingredients
+clj꞉skullery.schema꞉> 
+#'skullery.schema/resolve-recipe-ingredients
+clj꞉skullery.schema꞉> 
+#:CONVERSIONS{:ID 1,
+              :INGREDIENT_ID nil,
+              :CONVERT_TO "MASS",
+              :CONVERT_FROM "UNIT",
+              :TO_NOTE nil,
+              :FROM_NOTE nil,
+              :MULTIPLIER 235.0}
+clj꞉skullery.db꞉> 
+[#:CONVERSIONS{:ID 1,
+               :INGREDIENT_ID nil,
+               :CONVERT_TO "MASS",
+               :CONVERT_FROM "UNIT",
+               :TO_NOTE nil,
+               :FROM_NOTE nil,
+               :MULTIPLIER 235.0}
+ #:CONVERSIONS{:ID 3,
+               :INGREDIENT_ID 1,
+               :CONVERT_TO "MASS",
+               :CONVERT_FROM "UNIT",
+               :TO_NOTE nil,
+               :FROM_NOTE nil,
+               :MULTIPLIER 235.0}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+[]
+clj꞉skullery.db꞉> 
+[#:INGREDIENTS{:ID 1, :NAME "Egg", :UNIT_NAME "Egg", :UNIT_NAME_PLURAL "Eggs"}]
+clj꞉skullery.db꞉> 
+[#:RECIPES{:ID 1, :NAME "Eggs Benedict"}]
+clj꞉skullery.db꞉> 
+#:next.jdbc{:update-count 1}
+clj꞉skullery.db꞉> 
+[#:RECIPEINGREDIENTS{:ID 1, :INGREDIENT_ID 1, :RECIPE_ID 1, :QUANTITY 5.0, :DEFAULT_UNIT "UNIT"}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+; Syntax error compiling at (src/skullery/db.clj:48:40).
+; Unable to resolve symbol: recipe in this context
+clj꞉skullery.db꞉> 
+(def recipe {:id 1})
+#'skullery.db/recipe
+clj꞉skullery.db꞉> 
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:632).
+; Ambiguous column name "ID"; SQL statement:
+; SELECT id, quantity, default_unit, ingredient.id, ingredient.name, ingredient.unit_name, ingredient.unit_name_plural FROM recipeingredients INNER JOIN ingredients ON recipeingredients.ingredient_id = ingredients.id WHERE recipes_id = ? [90059-214]
+clj꞉skullery.db꞉> 
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "RECIPEINGREDIENT.ID" not found; SQL statement:
+; SELECT recipeingredient.id, quantity, default_unit, ingredient.id, ingredient.name, ingredient.unit_name, ingredient.unit_name_plural FROM recipeingredients INNER JOIN ingredients ON recipeingredients.ingredient_id = ingredients.id WHERE recipes_id = ? [42122-214]
+clj꞉skullery.db꞉> 
+[#:RECIPEINGREDIENTS{:ID 1, :INGREDIENT_ID 1, :RECIPE_ID 1, :QUANTITY 5.0, :DEFAULT_UNIT "UNIT"}]
+clj꞉skullery.db꞉> 
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "RECIPES_ID" not found; SQL statement:
+; SELECT recipeingredients.id, quantity, default_unit, ingredients.id, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM recipeingredients INNER JOIN ingredients ON recipeingredients.ingredient_id = ingredients.id WHERE recipes_id = ? [42122-214]
+clj꞉skullery.db꞉> 
+({:id 1,
+  :quantity 5.0,
+  :default_unit "UNIT",
+  :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}})
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+#:next.jdbc{:update-count 1}
+clj꞉skullery.db꞉> 
+[#:INGREDIENTS{:ID 1, :NAME "Egg", :UNIT_NAME "Egg", :UNIT_NAME_PLURAL "Eggs"}
+ #:INGREDIENTS{:ID 2, :NAME "Butter", :UNIT_NAME "Block", :UNIT_NAME_PLURAL "Blocks"}]
+clj꞉skullery.db꞉> 
+#:next.jdbc{:update-count 1}
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+[#:next.jdbc{:update-count 0}]
+clj꞉skullery.db꞉> 
+[#:RECIPEINGREDIENTS{:ID 1, :INGREDIENT_ID 1, :RECIPE_ID 1, :QUANTITY 5.0, :UNIT "UNIT"}
+ #:RECIPEINGREDIENTS{:ID 2, :INGREDIENT_ID 2, :RECIPE_ID 1, :QUANTITY 25.0, :UNIT "MASS"}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+; Execution error (IllegalArgumentException) at honey.sql/reduce-sql (sql.cljc:436).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉skullery.db꞉> 
+()
+clj꞉skullery.db꞉> 
+#:next.jdbc{:update-count 2}
+clj꞉skullery.db꞉> 
+[#:STEPS{:ID 1,
+         :RECIPE_ID 1,
+         :NAME "Whisk Eggs",
+         :BODY #object[org.h2.jdbc.JdbcClob 0x4cd64543 "clob0: 'Whisk the eggs till fluffy'"],
+         :STEP_ORDER 1}
+ #:STEPS{:ID 2,
+         :RECIPE_ID 1,
+         :NAME "Cook",
+         :BODY
+         #object[org.h2.jdbc.JdbcClob 0x9d59120 "clob1: 'Transfer the eggs to a pan, beating them as they cook'"],
+         :STEP_ORDER 2}]
+clj꞉skullery.db꞉> 
+({:id 1,
+  :name "Whisk Eggs",
+  :body #object[org.h2.jdbc.JdbcClob 0x7290f120 "clob2: 'Whisk the eggs till fluffy'"],
+  :step_order 1}
+ {:id 2,
+  :name "Cook",
+  :body #object[org.h2.jdbc.JdbcClob 0x18b627a1 "clob3: 'Transfer the eggs to a pan, beating them as they cook'"],
+  :step_order 2})
+clj꞉skullery.db꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+({:id 1,
+  :name "Whisk Eggs",
+  :body #object[org.h2.jdbc.JdbcClob 0x50200c15 "clob4: 'Whisk the eggs till fluffy'"],
+  :step_order 1}
+ {:id 2,
+  :name "Cook",
+  :body #object[org.h2.jdbc.JdbcClob 0x7cf3fe95 "clob5: 'Transfer the eggs to a pan, beating them as they cook'"],
+  :step_order 2})
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-steps
+clj꞉skullery.db꞉> 
+; Syntax error compiling at (src/skullery/db.clj:24:14).
+; No such namespace: rs
+clj꞉skullery.db꞉> 
+nil
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+(resolve-recipee nil {:id 1} nil)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:678:1).
+; Unable to resolve symbol: resolve-recipee in this context
+clj꞉skullery.db꞉> 
+(resolve-recipe nil {:id 1} nil)
+{:ID 1, :NAME "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+(resolve-recipe nil {:id 1} nil)
+#:recipes{:id 1, :name "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+(resolve-recipe nil {:id 1} nil)
+{:id 1, :name "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+(resolve-recipe nil {:id 1} nil)
+{:id 1, :name "Eggs Benedict"}
+clj꞉skullery.db꞉> 
+; Syntax error macroexpanding clojure.core/let at (src/skullery/db.clj:29:3).
+; [query {:select [:id [:convert_from :from] [:convert_to :to] :to_note :from_note :multiplier], :from [:conversions], :where [:= :ingredient_id (ingredient :id)]} res (jdbc/execute! ds (sql/format query)) {:builder-fn rs/as-unqualified-lower-maps}] - failed: even-number-of-forms? at: [:bindings] spec: :clojure.core.specs.alpha/bindings
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "SELECT id, convert_from AS [*]from, convert_to AS to, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = ?"; expected "identifier"; SQL statement:
+; SELECT id, convert_from AS from, convert_to AS to, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = ? [42001-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "SELECT id, convert_from AS fromage, convert_to AS [*]to, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = ?"; expected "identifier"; SQL statement:
+; SELECT id, convert_from AS fromage, convert_to AS to, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = ? [42001-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+[{:id 3, :fromage "UNIT", :toot "MASS", :to_note nil, :from_note nil, :multiplier 235.0}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "SELECT id, convert_from AS [*]from, convert_to AS toot, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = INGREDIENT(id)"; expected "identifier"; SQL statement:
+; SELECT id, convert_from AS from, convert_to AS toot, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = INGREDIENT(id) [42001-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "SELECT id, convert_from AS [*]from, convert_to AS toot, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = UNQUOTE(INGREDIENT(id))"; expected "identifier"; SQL statement:
+; SELECT id, convert_from AS from, convert_to AS toot, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = UNQUOTE(INGREDIENT(id)) [42001-214]
+clj꞉skullery.db꞉> 
+(def foo 2)
+#'skullery.db/foo
+clj꞉skullery.db꞉> 
+'{foo 2}
+{foo 2}
+clj꞉skullery.db꞉> 
+'{foo ~foo}
+{foo ~foo}
+clj꞉skullery.db꞉> 
+'{foo ~@foo}
+{foo (clojure.core/unquote-splicing foo)}
+clj꞉skullery.db꞉> 
+(sql/format {:select [:id [:convert_from :from] [:convert_to :toot] :to_note :from_note :multiplier]
+             :from   [:conversions]
+             :where  [:= :ingredient_id (ingredient :id)]} {:quote true})
+; Syntax error compiling at (.calva/output-window/output.calva-repl:750:41).
+; Unable to resolve symbol: ingredient in this context
+clj꞉skullery.db꞉> 
+(sql/format {:select [:id [:convert_from :from] [:convert_to :toot] :to_note :from_note :multiplier]
+             :from   [:conversions]
+             :where  [:= :ingredient_id 5]} {:quote true})
+["SELECT id, convert_from AS from, convert_to AS toot, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = ?"
+ 5]
+clj꞉skullery.db꞉> 
+(sql/format {:select [:id [:convert_from :from] [:convert_to :to] :to_note :from_note :multiplier]
+             :from   [:conversions]
+             :where  [:= :ingredient_id 5]} {:quote true})
+["SELECT id, convert_from AS from, convert_to AS to, to_note, from_note, multiplier FROM conversions WHERE ingredient_id = ?"
+ 5]
+clj꞉skullery.db꞉> 
+(sql/format {:select [:id [:convert_from :from] [:convert_to :to] :to_note :from_note :multiplier]
+             :from   [:conversions]
+             :where  [:= :ingredient_id 5]} {:quoted true})
+["SELECT \"id\", \"convert_from\" AS \"from\", \"convert_to\" AS \"to\", \"to_note\", \"from_note\", \"multiplier\" FROM \"conversions\" WHERE \"ingredient_id\" = ?"
+ 5]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Table "conversions" not found (candidates are: "CONVERSIONS"); SQL statement:
+; SELECT "id", "convert_from" AS "from", "convert_to" AS "to", "to_note", "from_note", "multiplier" FROM "conversions" WHERE "ingredient_id" = ? [42103-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "id" not found; SQL statement:
+; SELECT "id", "convert_from" AS "from", "convert_to" AS "to", "to_note", "from_note", "multiplier" FROM "CONVERSIONS" WHERE "ingredient_id" = ? [42122-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-conversions
+clj꞉skullery.db꞉> 
+(resolve-conversions nil nil {:id 1})
+[{:id 3, :from "UNIT", :to "MASS", :to_note nil, :from_note nil, :multiplier 235.0}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+(resolve-recipe-ingredients nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "IID" not found; SQL statement:
+; SELECT recipeingredients.id AS rid, quantity, unit, ingredients.id AS iid, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM recipeingredients INNER JOIN ingredients ON recipeingredients.ingredient_id = iid WHERE recipe_id = ? [42122-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+(resolve-recipe-ingredients nil nil {:id 1})
+({:id 1, :quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}}
+ {:id 2,
+  :quantity 25.0,
+  :unit "MASS",
+  :ingredient {:id 2, :name "Butter", :unit_name "Block", :unit_name_plural "Blocks"}})
+clj꞉skullery.db꞉> 
+(namespace :foo/bar)
+"foo"
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (assoc a (namespace c) )))
+; Execution error (ArityException) at skullery.db/eval37452 (form-init8733315804664460825.clj:810).
+; Wrong number of args (1) passed to: clojure.core/reduce
+clj꞉skullery.db꞉> 
+(keyword :foo/bar)
+:foo/bar
+clj꞉skullery.db꞉> 
+(name :foo/bar)
+"bar"
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (assoc a (namespace c) (comp keyword name))))
+; Execution error (ArityException) at skullery.db/eval37460 (form-init8733315804664460825.clj:820).
+; Wrong number of args (1) passed to: clojure.core/reduce
+clj꞉skullery.db꞉> 
+((comp keyword name) :foo/bar)
+:bar
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (assoc-in a [(namespace c)] (comp keyword name))))
+; Execution error (ArityException) at skullery.db/eval37466 (form-init8733315804664460825.clj:827).
+; Wrong number of args (1) passed to: clojure.core/reduce
+clj꞉skullery.db꞉> 
+(assoc-in {} [] :foo 1)
+; Execution error (ArityException) at skullery.db/eval37470 (form-init8733315804664460825.clj:831).
+; Wrong number of args (4) passed to: clojure.core/assoc-in
+clj꞉skullery.db꞉> 
+(assoc-in {} [] :foo)
+{nil :foo}
+clj꞉skullery.db꞉> 
+(assoc-in {} [:foo] :foo)
+{:foo :foo}
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a [(namespace k) (-> k name keyword)] v))))
+; Execution error (ArityException) at skullery.db/eval37476 (form-init8733315804664460825.clj:841).
+; Wrong number of args (1) passed to: clojure.core/reduce
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a [(-> k namespace keyword) (-> k name keyword)] v)))
+        {}
+        {:foo/bar 1
+         :baz/bob 2})
+{"foo" {:bar 1}, "baz" {:bob 2}}
+clj꞉skullery.db꞉> 
+{:foo {:bar 1}, :baz {:bob 2}}
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a [(-> k namespace keyword) (-> k name keyword)] v)))
+        {}
+        {:foo/bar 1
+         :baz/bob 2
+         :baz/boob 3
+         :wololo 4})
+{:foo {:bar 1}, :baz {:bob 2, :boob 3}, nil {:wololo 4}}
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a (remove nil? [(-> k namespace keyword) (-> k name keyword)]) v)))
+        {}
+        {:foo/bar 1
+         :baz/bob 2
+         :baz/boob 3
+         :wololo 4})
+{:foo {:bar 1}, :baz {:bob 2, :boob 3}, :wololo 4}
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a (remove nil? [(-> k namespace keyword) (-> k name keyword)]) v)))
+        {}
+        {:foo/bar 1
+         :baz/bob 2
+         :baz/boob 3
+         :wololo 4
+         :bololo 5})
+{:foo {:bar 1}, :baz {:bob 2, :boob 3}, :wololo 4, :bololo 5}
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a (remove #{nil baz} [(-> k namespace keyword) (-> k name keyword)]) v)))
+        {}
+        {:foo/bar 1
+         :baz/bob 2
+         :baz/boob 3
+         :wololo 4
+         :bololo 5})
+; Syntax error compiling at (.calva/output-window/output.calva-repl:884:33).
+; Unable to resolve symbol: baz in this context
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a (remove #{nil :baz} [(-> k namespace keyword) (-> k name keyword)]) v)))
+        {}
+        {:foo/bar 1
+         :baz/bob 2
+         :baz/boob 3
+         :wololo 4
+         :bololo 5})
+{:foo {:bar 1}, :bob 2, :boob 3, nil {:wololo 4, :bololo 5}}
+clj꞉skullery.db꞉> 
+(reduce (fn [a c] (let [[k v] c]
+                    (assoc-in a (remove nil? [(-> k namespace keyword) (-> k name keyword)]) v)))
+        {}
+        {:foo/bar 1
+         :baz/bob 2
+         :baz/boob 3
+         :wololo 4
+         :bololo 5}); Syntax error compiling at (src/skullery/db.clj:51:3).
+; Unable to resolve symbol: update-keys in this context
+clj꞉skullery.db꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉skullery.server꞉> 
+; Jack-in done.
+clj꞉skullery.server꞉> 
+(+ 1 1)
+2
+clj꞉skullery.schema꞉> 
+nil
+clj꞉skullery.db꞉> 
+#'skullery.db/un-namespace
+clj꞉skullery.db꞉> 
+(un-namespace {:foo/bar 1 :foo/baz 2 :woo/tan 3 :foo 4} #{:foo})
+{:bar 1, :baz 2, :woo/tan 3, :foo 4}
+clj꞉skullery.db꞉> 
+; Syntax error compiling at (src/skullery/db.clj:62:5).
+; Unable to resolve symbol: group-by-namespace in this context
+clj꞉skullery.db꞉> 
+#'skullery.db/group-by-namespace
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+(resolve-recipe-ingredients nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "INGREDIENT.ID" not found; SQL statement:
+; SELECT recipeingredients.id AS id, quantity, unit, ingredient.id, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM recipeingredients INNER JOIN ingredients ON recipeingredients.ingredient_id = ingredients.id WHERE recipe_id = ? [42122-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-ingredients
+clj꞉skullery.db꞉> 
+(resolve-recipe-ingredients nil nil {:id 1})
+({:id 1, :quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}}
+ {:id 2,
+  :quantity 25.0,
+  :unit "MASS",
+  :ingredient {:id 2, :name "Butter", :unit_name "Block", :unit_name_plural "Blocks"}})
+clj꞉skullery.db꞉> 
+nil
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-steps
+clj꞉skullery.db꞉> 
+(resolve-steps nil nil {:id 1})
+({:id 1, :name "Whisk Eggs", :body "Whisk the eggs till fluffy", :step_order 1}
+ {:id 2, :name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :step_order 2})
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-steps
+clj꞉skullery.db꞉> 
+(resolve-steps nil nil {:id 1})
+[{:id 1, :name "Whisk Eggs", :body "Whisk the eggs till fluffy", :step_order 1}
+ {:id 2, :name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :step_order 2}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipes
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipes
+clj꞉skullery.db꞉> 
+(resolve-recipes)
+; Execution error (ArityException) at skullery.db/eval36752 (form-init5480639166270581602.clj:982).
+; Wrong number of args (0) passed to: skullery.db/resolve-recipes
+clj꞉skullery.db꞉> 
+(resolve-recipes nil nil nil)
+[{:id 1, :name "Eggs Benedict"}]
+clj꞉skullery.db꞉> 
+[#:STEPS{:ID 1, :RECIPE_ID 1, :NAME "Whisk Eggs", :BODY "Whisk the eggs till fluffy", :STEP_ORDER 1}
+ #:STEPS{:ID 2,
+         :RECIPE_ID 1,
+         :NAME "Cook",
+         :BODY "Transfer the eggs to a pan, beating them as they cook",
+         :STEP_ORDER 2}]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-step-ingredients
+clj꞉skullery.db꞉> 
+(resolve-step-ingredients nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:632).
+; Ambiguous column name "QUANTITY"; SQL statement:
+; SELECT quantity, recipeingredients.unit, ingredients.id, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM stepingredients INNER JOIN recipeingredients AS "=" "stepingredients.ingredient_id" "ingredients.id" ON INGREDIENTS(recipeingredients.ingredient_id = ingredients.id) WHERE step_id = ? [90059-214]
+clj꞉skullery.db꞉> 
+(resolve-step-ingredients nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:632).
+; Ambiguous column name "QUANTITY"; SQL statement:
+; SELECT quantity, recipeingredients.unit, ingredients.id, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM stepingredients INNER JOIN recipeingredients AS "=" "stepingredients.ingredient_id" "ingredients.id" ON INGREDIENTS(recipeingredients.ingredient_id = ingredients.id) WHERE step_id = ? [90059-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-step-ingredients
+clj꞉skullery.db꞉> 
+(resolve-step-ingredients nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "SELECT stepingredients.quantity, recipeingredients.unit, ingredients.id, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM stepingredients INNER JOIN recipeingredients AS ""="" [*]""stepingredients.ingredient_id"" ""ingredients.id"" ON INGREDIENTS(recipeingredients.ingredient_id = ingredients.id) WHERE step_id = ?"; SQL statement:
+; SELECT stepingredients.quantity, recipeingredients.unit, ingredients.id, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM stepingredients INNER JOIN recipeingredients AS "=" "stepingredients.ingredient_id" "ingredients.id" ON INGREDIENTS(recipeingredients.ingredient_id = ingredients.id) WHERE step_id = ? [42000-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-step-ingredients
+clj꞉skullery.db꞉> 
+(resolve-step-ingredients nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "STEPINGREDIENTS.INGREDIENT_ID" not found; SQL statement:
+; SELECT stepingredients.quantity, recipeingredients.unit, ingredients.id, ingredients.name, ingredients.unit_name, ingredients.unit_name_plural FROM stepingredients INNER JOIN recipeingredients ON stepingredients.ingredient_id = ingredients.id INNER JOIN ingredients ON recipeingredients.ingredient_id = ingredients.id WHERE step_id = ? [42122-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-step-ingredients
+clj꞉skullery.db꞉> 
+(resolve-step-ingredients nil nil {:id 1})
+()
+clj꞉skullery.db꞉> 
+[#:RECIPEINGREDIENTS{:ID 1, :INGREDIENT_ID 1, :RECIPE_ID 1, :QUANTITY 5.0, :UNIT "UNIT"}
+ #:RECIPEINGREDIENTS{:ID 2, :INGREDIENT_ID 2, :RECIPE_ID 1, :QUANTITY 25.0, :UNIT "MASS"}]
+clj꞉skullery.db꞉> 
+[{:RECIPEINGREDIENTS/INGREDIENT_ID 1,
+  :RECIPEINGREDIENTS/UNIT "UNIT",
+  :INGREDIENTS/UNIT_NAME "Egg",
+  :RECIPEINGREDIENTS/QUANTITY 5.0,
+  :RECIPEINGREDIENTS/ID 1,
+  :RECIPEINGREDIENTS/RECIPE_ID 1,
+  :INGREDIENTS/NAME "Egg",
+  :INGREDIENTS/UNIT_NAME_PLURAL "Eggs",
+  :INGREDIENTS/ID 1}
+ {:RECIPEINGREDIENTS/INGREDIENT_ID 2,
+  :RECIPEINGREDIENTS/UNIT "MASS",
+  :INGREDIENTS/UNIT_NAME "Block",
+  :RECIPEINGREDIENTS/QUANTITY 25.0,
+  :RECIPEINGREDIENTS/ID 2,
+  :RECIPEINGREDIENTS/RECIPE_ID 1,
+  :INGREDIENTS/NAME "Butter",
+  :INGREDIENTS/UNIT_NAME_PLURAL "Blocks",
+  :INGREDIENTS/ID 2}]
+clj꞉skullery.db꞉> 
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Table "STEPSINGREDIENTS" not found; SQL statement:
+; INSERT INTO stepsingredients (recipe_ingredient_id, step_id, quantity) VALUES (?, ?, ?) [42102-214]
+clj꞉skullery.db꞉> 
+#:next.jdbc{:update-count 1}
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-step-ingredients
+clj꞉skullery.db꞉> 
+(resolve-step-ingredients nil nil {:id 1})
+({:id nil, :quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}})
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-step-ingredients
+clj꞉skullery.db꞉> 
+(resolve-step-ingredients nil nil {:id 1})
+({:quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}})
+clj꞉skullery.db꞉> 
+(time (resolve-step-ingredients nil nil {:id 1}))
+"Elapsed time: 162.751793 msecs"
+({:quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}})
+clj꞉skullery.db꞉> 
+(time (resolve-step-ingredients nil nil {:id 1}))
+"Elapsed time: 51.492321 msecs"
+({:quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}})
+clj꞉skullery.db꞉> 
+(time (resolve-step-ingredients nil nil {:id 1}))
+"Elapsed time: 49.986739 msecs"
+({:quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}})
+clj꞉skullery.db꞉> 
+(time (resolve-step-ingredients nil nil {:id 1}))
+"Elapsed time: 50.761983 msecs"
+({:quantity 5.0, :unit "UNIT", :ingredient {:id 1, :name "Egg", :unit_name "Egg", :unit_name_plural "Eggs"}})
+clj꞉skullery.db꞉> 
+; Syntax error compiling at (src/skullery/db.clj:103:5).
+; No such namespace: jdbc
+clj꞉skullery.db꞉> 
+nil
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-equipment
+clj꞉skullery.db꞉> 
+(resolve-recipe-equipment nil nil {:id 1})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "RECIPE.ID" not found; SQL statement:
+; SELECT id, name FROM recipeequipment INNER JOIN equipment ON equipment.id = equipment_id WHERE recipe.id = recipe_id [42122-214]
+clj꞉skullery.db꞉> 
+#'skullery.db/resolve-recipe-equipment
+clj꞉skullery.db꞉> 
+(resolve-recipe-equipment nil nil {:id 1})
+[]
+clj꞉skullery.db꞉> 
+nil
+clj꞉skullery.server꞉> 
+; Syntax error compiling at (src/skullery/server.clj:72:3).
+; Unable to resolve symbol: restart! in this context
+clj꞉skullery.server꞉> 
+; Evaluating file: server.clj
+; Execution error (IllegalAccessError) at skullery.server/eval36860$loading (server.clj:1).
+; skullery-schema does not exist
+; Evaluation of file server.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉skullery.server꞉> 
+; Evaluating file: schema.clj
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+; Evaluating file: server.clj
+nil
+clj꞉skullery.server꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉skullery.server꞉> 
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+; Syntax error compiling at (src/skullery/schema.clj:37:7).
+; No such namespace: lacinia
+clj꞉skullery.schema꞉> 
+nil
+clj꞉skullery.schema꞉> 
+; Execution error - invalid arguments to com.walmartlabs.lacinia.schema/compile at (schema.clj:2056).
+; :delete-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-recipe - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-recipe-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mu
+; tations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-step-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-ingredients - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-recipe-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-recipe-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :
+; com.walmartlabs.lacinia.schema/operation
+; :edit-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-recipe - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-conversion - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :a
+; dd-conversions - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-step-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-step - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-step - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-steps - failed: (re-matches graphql-identi
+; fier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-recipe - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-step-ingredients - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-recipe-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema 
+; :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-conversion - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-recipe-ingredients - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+clj꞉skullery.schema꞉> 
+; Execution error - invalid arguments to com.walmartlabs.lacinia.schema/compile at (schema.clj:2056).
+; :delete-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-recipe - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-recipe-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mu
+; tations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-step-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-ingredients - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-recipe-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-recipe-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :
+; com.walmartlabs.lacinia.schema/operation
+; :edit-equipment - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-recipe - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-conversion - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :a
+; dd-conversions - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-step-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-step - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-step - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-steps - failed: (re-matches graphql-identi
+; fier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :edit-recipe - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-step-ingredients - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-recipe-ingredient - failed: (re-matches graphql-identifier (name %)) at: [:schema 
+; :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :delete-conversion - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+; :add-recipe-ingredients - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+; nil - failed: map? at: [:schema :mutations 1] spec: :com.walmartlabs.lacinia.schema/operation
+clj꞉skullery.schema꞉> 
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 640.673528 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 360.634595 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 356.531104 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+"Elapsed time: 150.514517 msecs"
+"Elapsed time: 464.685071 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 53.580877 msecs"
+"Elapsed time: 368.257483 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 49.030736 msecs"
+"Elapsed time: 363.672269 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 49.724437 msecs"
+"Elapsed time: 364.441611 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+; Evaluating file: db.clj
+nil
+clj꞉skullery.db꞉> 
+ds
+#object[next.jdbc.connection$url_PLUS_etc$reify__26943 0x797d4c83 "jdbc:h2:./skullery"]
+clj꞉skullery.db꞉> 
+#'skullery.db/conn
+clj꞉skullery.db꞉> 
+; Evaluating file: db.clj
+nil
+clj꞉skullery.db꞉> 
+(time (resolve-recipes nil nil nil))
+"Elapsed time: 0.94194 msecs"
+[{:id 1, :name "Eggs Benedict"}]
+clj꞉skullery.db꞉> 
+(time (resolve-recipes nil nil nil))
+"Elapsed time: 0.43532 msecs"
+[{:id 1, :name "Eggs Benedict"}]
+clj꞉skullery.db꞉> 
+"Elapsed time: 0.935258 msecs"
+"Elapsed time: 10.777368 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+#'skullery.db/resolve-recipe
+clj꞉skullery.db꞉> 
+nil
+clj꞉skullery.schema꞉> 
+"Elapsed time: 5.159638 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 5.302622 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 4.660388 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 5.204605 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+"Elapsed time: 6.475894 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+; Execution error - invalid arguments to com.walmartlabs.lacinia.schema/compile at (schema.clj:2056).
+; :add-recipe - failed: (re-matches graphql-identifier (name %)) at: [:schema :mutations 0] spec: :com.walmartlabs.lacinia.schema/graphql-identifier
+clj꞉skullery.schema꞉> 
+; Execution error (ExceptionInfo) at com.walmartlabs.lacinia.schema/verify-fields-and-args (schema.clj:1673).
+; Argument `Mutation/add_recipe.steps' is must be a scalar type, an enum, or an input object.
+clj꞉skullery.schema꞉> 
+"Elapsed time: 5.504459 msecs"
+{:data
+ {:recipe
+  {:id 1,
+   :name "Eggs Benedict",
+   :ingredients
+   [{:quantity 5.0, :unit :UNIT, :ingredient {:name "Egg", :conversions [{:from :UNIT, :to :MASS, :multiplier 235.0}]}}
+    {:quantity 25.0, :unit :MASS, :ingredient {:name "Butter", :conversions []}}],
+   :steps
+   [{:name "Whisk Eggs", :body "Whisk the eggs till fluffy", :ingredients [{:ingredient {:name "Egg"}}]}
+    {:name "Cook", :body "Transfer the eggs to a pan, beating them as they cook", :ingredients []}]}}}
+clj꞉skullery.schema꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉skullery.server꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉skullery.server꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉skullery.server꞉> 
+; Evaluating file: server.clj
+nil
+clj꞉skullery.server꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉skullery.server꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉skullery.server꞉> 
+; Jack-in done.
+clj꞉skullery.server꞉> 
+; Evaluating file: server.clj
+nil
+clj꞉skullery.server꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉skullery.server꞉> 
+serv
+#object[clojure.lang.Var$Unbound 0x5b0465b "Unbound: #'skullery.server/serv"]
+clj꞉skullery.server꞉> 
+#'skullery.server/restart!
+clj꞉skullery.server꞉> 
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+
+Creating your [DEV] server...
+#'skullery.server/serv
+clj꞉skullery.server꞉> 
+; Evaluating file: server.clj
+nil
+clj꞉skullery.server꞉> 
+{:io.pedestal.http/port 8888,
+ :io.pedestal.http/service-fn #function[io.pedestal.http.impl.servlet-interceptor/interceptor-service-fn/fn--23352],
+ :io.pedestal.http/host "localhost",
+ :io.pedestal.http/secure-headers nil,
+ :io.pedestal.http/type :jetty,
+ :io.pedestal.http/start-fn #function[io.pedestal.http.jetty/server/fn--29046],
+ :io.pedestal.http/container-options
+ {:context-configurator #function[com.walmartlabs.lacinia.pedestal.internal/add-subscriptions-support/fn--24880]},
+ :env :dev,
+ :io.pedestal.http/interceptors
+ [{:name :io.pedestal.http/log-request,
+   :enter #function[io.pedestal.interceptor.helpers/on-request/fn--20246],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http/not-found,
+   :enter nil,
+   :leave #function[io.pedestal.interceptor.helpers/after/fn--20210],
+   :error nil}
+  {:name :io.pedestal.http.ring-middlewares/content-type-interceptor,
+   :enter nil,
+   :leave #function[io.pedestal.interceptor.helpers/after/fn--20210],
+   :error nil}
+  {:name :io.pedestal.http.route/query-params,
+   :enter #function[io.pedestal.http.route/fn--21118],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/path-params-decoder,
+   :enter #function[io.pedestal.http.route/fn--21120],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/method-param,
+   :enter #function[io.pedestal.http.route/method-param/fn--21123],
+   :leave nil,
+   :error nil}
+  {:name :io.pedestal.http.route/router,
+   :enter #function[io.pedestal.http.route/eval21104/fn--21105/fn--21106],
+   :leave nil,
+   :error nil}],
+ :io.pedestal.http/routes
+ #{["/assets/graphiql/*path"
+    :head
+    #function[com.walmartlabs.lacinia.pedestal2/graphiql-asset-routes/asset-head-handler--24910]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-head-assets]
+   ["/assets/graphiql/*path"
+    :get
+    #function[ring.middleware.not-modified/wrap-not-modified/fn--22151]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-get-assets]
+   ["/api"
+    :post
+    [{:name :com.walmartlabs.lacinia.pedestal2/initialize-tracing,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--24901],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/json-response,
+      :enter nil,
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-json-response],
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/error-response,
+      :enter nil,
+      :leave nil,
+      :error #function[com.walmartlabs.lacinia.pedestal.internal/on-error-error-response]}
+     {:name :com.walmartlabs.lacinia.pedestal2/body-data,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--24887],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/graphql-data,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--24890],
+      :leave #function[com.walmartlabs.lacinia.pedestal2/clear-graphql-data],
+      :error #function[com.walmartlabs.lacinia.pedestal2/fn--24893]}
+     {:name :com.walmartlabs.lacinia.pedestal2/status-conversion,
+      :enter nil,
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-status-conversion],
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/missing-query,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--24895],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/query-parser,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/query-parser-interceptor/fn--24897],
+      :leave #function[com.walmartlabs.lacinia.pedestal.internal/on-leave-query-parser],
+      :error #function[com.walmartlabs.lacinia.pedestal.internal/on-error-query-parser]}
+     {:name :com.walmartlabs.lacinia.pedestal2/disallow-subscriptions,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-disallow-subscriptions],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/prepare-query,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-prepare-query],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/inject-app-context,
+      :enter #function[com.walmartlabs.lacinia.pedestal.interceptors/on-enter-app-context-interceptor/fn--11440],
+      :leave #function[com.walmartlabs.lacinia.pedestal.interceptors/on-leave-app-context-interceptor],
+      :error #function[com.walmartlabs.lacinia.pedestal.interceptors/on-error-app-context-interceptor]}
+     {:name :com.walmartlabs.lacinia.pedestal2/enable-tracing,
+      :enter #function[com.walmartlabs.lacinia.pedestal2/fn--24903],
+      :leave nil,
+      :error nil}
+     {:name :com.walmartlabs.lacinia.pedestal2/query-executor,
+      :enter #function[com.walmartlabs.lacinia.pedestal.internal/on-enter-query-executor/fn--24854],
+      :leave nil,
+      :error nil}]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphql-api]
+   ["/ide"
+    :get
+    #function[com.walmartlabs.lacinia.pedestal2/graphiql-ide-handler/fn--24914]
+    :route-name
+    :com.walmartlabs.lacinia.pedestal2/graphiql-ide]},
+ :io.pedestal.http/servlet
+ #object[io.pedestal.http.servlet.FnServlet 0x31b9b4a8 "io.pedestal.http.servlet.FnServlet@31b9b4a8"],
+ :io.pedestal.http/server
+ #object[org.eclipse.jetty.server.Server 0x51ae3fe9 "Server@51ae3fe9{STOPPED}[9.4.44.v20210927]"],
+ :io.pedestal.http/join? false,
+ :io.pedestal.http/stop-fn #function[io.pedestal.http.jetty/server/fn--29048]}
+clj꞉skullery.server꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉skullery.server꞉> 
+; Jack-in done.
+clj꞉skullery.server꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"1.0.0"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.28.5"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- with-profile +dev repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉skullery.server꞉> 
+; Jack-in done.
+clj꞉skullery.server꞉> 
+{:bulk "0.86 /100"
+ :wagg (/ 6.65 (/ (* 7 125) / 100))}
+; Execution error (ClassCastException) at skullery.system/eval36804 (form-init14895594661222624564.clj:1653).
+; class clojure.core$_SLASH_ cannot be cast to class java.lang.Number (clojure.core$_SLASH_ is in unnamed module of loader 'app'; java.lang.Number is in module java.base of loader 'bootstrap')
+clj꞉skullery.server꞉> 
+{:bulk "0.86 /100"
+ :wagg (/ 6.65 (/ (* 7 125) 100))}
+{:bulk "0.86 /100", :wagg 0.76}
+clj꞉skullery.system꞉> 
+{:bulk (/ 68.99 8000)
+ :wagg (/ 6.65 (* 7 125))}
+{:bulk 0.00862375, :wagg 0.0076}
+clj꞉skullery.system꞉> 
+{:bulk (/ 68.99 8000)
+ :wagg (/ 7.89 (* 7 125))}
+{:bulk 0.00862375, :wagg 0.009017142857142857}
+clj꞉skullery.system꞉> 
+(in-ns user)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:1669:1).
+; Unable to resolve symbol: user in this context
+clj꞉skullery.system꞉> 
+; Evaluating file: user.clj
+; Syntax error compiling at (dev-resources/user.clj:27:17).
+; No such var: system/new-system
+; Evaluation of file user.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉user꞉> 
+; Evaluating file: user.clj
+; Syntax error compiling at (dev-resources/user.clj:27:17).
+; No such var: system/new-system
+; Evaluation of file user.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉user꞉> 
+; Syntax error compiling at (src/skullery/system.clj:8:10).
+; No such namespace: component
+clj꞉skullery.system꞉> 
+; Syntax error macroexpanding clojure.core/ns at (src/skullery/system.clj:1:1).
+; ((:require [com.stuartsierra/component :as component] [skullery.schema :as schema] [skullery.server :as server])) - failed: Extra input spec: :clojure.core.specs.alpha/ns-form
+clj꞉skullery.system꞉> 
+; Syntax error macroexpanding clojure.core/ns at (src/skullery/system.clj:1:1).
+; ((:require [com.stuartsierra/component :as component] [skullery.schema :as schema] [skullery.server :as server])) - failed: Extra input spec: :clojure.core.specs.alpha/ns-form
+clj꞉skullery.system꞉> 
+nil
+clj꞉skullery.system꞉> 
+; Syntax error macroexpanding clojure.core/ns at (src/skullery/system.clj:1:1).
+; ((:require [com.stuartsierra/component :as component] [skullery.schema :as schema] [skullery.server :as server])) - failed: Extra input spec: :clojure.core.specs.alpha/ns-form
+clj꞉skullery.system꞉> 
+nil
+clj꞉skullery.system꞉> 
+; Syntax error macroexpanding clojure.core/ns at (src/skullery/system.clj:1:1).
+; ((:require [com.stuartsierra/component :as component] [skullery.schema :as schema] [skullery.server :as server])) - failed: Extra input spec: :clojure.core.specs.alpha/ns-form
+clj꞉skullery.system꞉> 
+; Syntax error macroexpanding clojure.core/ns at (src/skullery/server.clj:1:1).
+; com.stuartsierra/component - failed: simple-symbol? at: [:ns-clauses :require :body :libspec :lib+opts :lib] spec: :clojure.core.specs.alpha/libspec
+; [com.stuartsierra/component :as component] - failed: simple-symbol? at: [:ns-clauses :require :body :libspec :lib] spec: :clojure.core.specs.alpha/libspec
+; com.stuartsierra/component - failed: simple-symbol? at: [:ns-clauses :require :body :prefix-list :prefix] spec: :clojure.core.specs.alpha/prefix-list
+; [com.stuartsierra/component :as component] - failed: #{:verbose :reload :reload-all} at: [:ns-clauses :require :body :flag] spec: :clojure.core.specs.alpha/ns-require
+; :require - failed: #{:refer-clojure} at: [:ns-clauses :refer-clojure :clause] spec: :clojure.core.specs.alpha/ns-refer-clojure
+; :require - failed: #{:import} at: [:ns-clauses :import :clause] spec: :clojure.core.specs.alpha/ns-import
+; :require - failed: #{:use} at: [:ns-clauses :use :clause] spec: :clojure.core.specs.alpha/ns
+; -use
+; :require - failed: #{:refer} at: [:ns-clauses :refer :clause] spec: :clojure.core.specs.alpha/ns-refer
+; :require - failed: #{:load} at: [:ns-clauses :load :clause] spec: :clojure.core.specs.alpha/ns-load
+; :require - failed: #{:gen-class} at: [:ns-clauses :gen-class :clause] spec: :clojure.core.specs.alpha/ns-gen-class
+clj꞉skullery.server꞉> 
+; Syntax error macroexpanding clojure.core/ns at (src/skullery/schema.clj:1:1).
+; ((:require [clojure.edn :as edn] [clojure.java.io :as io] [clojure.spec.alpha :as s] [com.walmartlabs.lacinia :as lacinia] [com.walmartlabs.lacinia.expound] [com.walmartlabs.lacinia.schema :as schema] [com.walmartlabs.lacinia.util :refer [attach-resolvers]] [expound.alpha :as expound] [com.stuartsierra/component :as component] [skullery.db :as db])) - failed: Extra input spec: :clojure.core.specs.alpha/ns-form
+clj꞉skullery.schema꞉> 
+nil
+clj꞉skullery.system꞉> 
+; Syntax error compiling at (src/skullery/system.clj:9:10).
+; No such var: server/new-server
+clj꞉skullery.system꞉> 
+; Syntax error compiling at (src/skullery/server.clj:17:5).
+; Unable to resolve symbol: this in this context
+clj꞉skullery.server꞉> 
+; Syntax error compiling deftype* at (src/skullery/server.clj:7:1).
+; No such namespace: component
+clj꞉skullery.server꞉> 
+nil
+clj꞉skullery.server꞉> 
+skullery.server.Server
+clj꞉skullery.server꞉> 
+#'skullery.server/new-server
+clj꞉skullery.server꞉> 
+; Evaluating file: schema.clj
+nil
+clj꞉skullery.schema꞉> 
+; Evaluating file: system.clj
+#'skullery.system/new-system
+clj꞉skullery.system꞉> 
+nil
+clj꞉user꞉> 
+; Evaluating file: user.clj
+#'user/stop
+clj꞉user꞉> 
+(start-system)
+; Syntax error compiling at (.calva/output-window/output.calva-repl:1746:1).
+; Unable to resolve symbol: start-system in this context
+clj꞉user꞉> 
+(start)
+; Execution error (ExceptionInfo) at com.stuartsierra.component/get-dependency (component.cljc:73).
+; Missing dependency :schema of skullery.server.Server expected in system at :schema
+clj꞉user꞉> 
+#'skullery.schema/new-schema
+clj꞉skullery.schema꞉> 
+; Evaluating file: user.clj
+#'user/stop
+clj꞉user꞉> 
+(start)
+; Execution error (ExceptionInfo) at com.stuartsierra.component/get-dependency (component.cljc:73).
+; Missing dependency :schema of skullery.server.Server expected in system at :schema
+clj꞉user꞉> 
+#'skullery.schema/new-schema
+clj꞉skullery.schema꞉> 
+skullery.schema.Schema
+clj꞉skullery.schema꞉> 
+#'skullery.system/new-system
+clj꞉skullery.system꞉> 
+nil
+clj꞉user꞉> (def system (system/new-system))
+#'user/system
+clj꞉user꞉> 
+(start)
+; Execution error (ArityException) at skullery.server.Server/start (form-init14895594661222624564.clj:12).
+; Wrong number of args (1) passed to: com.walmartlabs.lacinia.pedestal2/default-service
+clj꞉user꞉> 
+; Syntax error compiling at (src/skullery/server.clj:9:3).
+; Unable to resolve symbol: start in this context
+clj꞉skullery.server꞉> 
+skullery.server.Server
+clj꞉skullery.server꞉> 
+true
+clj꞉user꞉> 
+(start)
+; Execution error (ArityException) at skullery.server.Server/start (form-init14895594661222624564.clj:12).
+; Wrong number of args (1) passed to: com.walmartlabs.lacinia.pedestal2/default-service
+clj꞉user꞉> 
+(def system (system/new-system))
+#'user/system
+clj꞉user꞉> 
+(start)
+:started
+clj꞉user꞉> 
+; Syntax error compiling at (src/skullery/schema.clj:17:5).
+; No such var: db/get-recipe-by-id
+clj꞉skullery.schema꞉> 
+; Syntax error compiling at (src/skullery/system.clj:12:10).
+; No such namespace: db
+clj꞉skullery.system꞉> 
+nil
+clj꞉skullery.system꞉> 
+; Syntax error compiling at (src/skullery/system.clj:12:10).
+; No such var: db/new-database
+clj꞉skullery.system꞉> 
+; Evaluating file: db.clj
+nil
+clj꞉skullery.db꞉> 
+; Evaluating file: system.clj
+#'skullery.system/new-system
+clj꞉skullery.system꞉> 
+; Evaluating file: schema.clj
+#'skullery.schema/new-schema
+clj꞉skullery.schema꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+skullery.schema.Schema
+clj꞉skullery.schema꞉> 
+#'skullery.schema/new-schema
+clj꞉skullery.schema꞉> 
+; Evaluating file: db.clj
+nil
+clj꞉skullery.db꞉> 
+; Evaluating file: system.clj
+#'skullery.system/new-system
+clj꞉skullery.system꞉> 
+#'user/stop
+clj꞉user꞉> 
+(stop)
+:stopped
+clj꞉user꞉> 
+(start)
+; Execution error (ArityException) at skullery.schema.Schema/start (form-init14895594661222624564.clj:40).
+; Wrong number of args (0) passed to: skullery.schema/skullery-schema
+clj꞉user꞉> 
+skullery.schema.Schema
+clj꞉skullery.schema꞉> 
+(def system (system/new-system))
+; Syntax error compiling at (.calva/output-window/output.calva-repl:1837:13).
+; No such namespace: system
+clj꞉skullery.schema꞉> 
+(in-ns 'user)
+#namespace[user]
+clj꞉user꞉> 
+(def system (system/new-system))
+#'user/system
+clj꞉user꞉> 
+(start)
+; Execution error (ExceptionInfo) at com.stuartsierra.component/get-dependency (component.cljc:73).
+; Missing dependency :db of skullery.schema.Schema expected in system at :db
+clj꞉user꞉> 
+#'skullery.schema/new-schema
+clj꞉skullery.schema꞉> 
+(def system (system/new-system))
+; Syntax error compiling at (.calva/output-window/output.calva-repl:1853:13).
+; No such namespace: system
+clj꞉skullery.schema꞉> 
+(in-ns 'user)
+#namespace[user]
+clj꞉user꞉> 
+(def system (system/new-system))
+#'user/system
+clj꞉user꞉> 
+(start)
+:started
+clj꞉user꞉> 
+#'user/start
+clj꞉user꞉> 
+#'user/stop
+clj꞉user꞉> 
+#'skullery.db/list-ingredient-conversions
+clj꞉skullery.db꞉> 
+#'skullery.db/list-recipes
+clj꞉skullery.db꞉> 
+; Evaluating file: db.clj
+nil
+clj꞉skullery.db꞉> 
+; Evaluating file: schema.clj
+#'skullery.schema/new-schema
+clj꞉skullery.schema꞉> 
+:stopped
+clj꞉user꞉> 
+:started
+clj꞉user꞉> 
+#'skullery.schema/skullery-schema
+clj꞉skullery.schema꞉> 
+:stopped
+clj꞉user꞉> 
+:started
+clj꞉user꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:13:1).
+; Unable to resolve symbol: deftest in this context
+clj꞉skullery.service-test꞉> 
+; Execution error (FileNotFoundException) at skullery.service-test/eval37939$loading (form-init14895594661222624564.clj:1).
+; Could not locate skullery/service__init.class, skullery/service.clj or skullery/service.cljc on classpath.
+clj꞉skullery.service-test꞉> 
+; Execution error (FileNotFoundException) at skullery.service-test/eval38056$loading (form-init14895594661222624564.clj:1).
+; Could not locate skullery/service__init.class, skullery/service.clj or skullery/service.cljc on classpath.
+clj꞉skullery.service-test꞉> 
+nil
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/sys-q
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running tests for skullery.service-test...
+; Running tests for skullery.service-test...
+; ERROR in skullery.service-test/get-recipe-by-id (parser.clj:14):
+; : Uncaught exception, not in assertion
+; error: java.lang.IllegalStateException: The provided schema has not been compiled. (parser.clj:14)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; ERROR in skullery.service-test/get-recipe-by-id (parser.clj:14):
+; : Uncaught exception, not in assertion
+; error: java.lang.IllegalStateException: The provided schema has not been compiled. (parser.clj:14)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Running tests for skullery.service-test...
+; ERROR in skullery.service-test/get-recipe-by-id (parser.clj:14):
+; : Uncaught exception, not in assertion
+; error: java.lang.IllegalStateException: The provided schema has not been compiled. (parser.clj:14)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+; ERROR in skullery.service-test/get-recipe-by-id (parser.clj:14):
+; : Uncaught exception, not in assertion
+; error: java.lang.IllegalStateException: The provided schema has not been compiled. (parser.clj:14)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+; ERROR in skullery.service-test/get-recipe-by-id (parser.clj:14):
+; : Uncaught exception, not in assertion
+; error: java.lang.IllegalStateException: The provided schema has not been compiled. (parser.clj:14)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+#function[skullery.system/new-system]
+; FAIL in skullery.service-test/get-recipe-by-id (form-init14895594661222624564.clj:16):
+; expected:
+true
+
+; actual:
+false
+
+; 1 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+{:schema #<SystemMap>}
+; FAIL in skullery.service-test/get-recipe-by-id (form-init14895594661222624564.clj:16):
+; expected:
+true
+
+; actual:
+false
+
+; 1 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+{:schema #<SystemMap>}
+; FAIL in skullery.service-test/get-recipe-by-id (form-init14895594661222624564.clj:16):
+; expected:
+true
+
+; actual:
+false
+
+; 1 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+; FAIL in skullery.service-test/get-recipe-by-id (form-init14895594661222624564.clj:16):
+; expected:
+true
+
+; actual:
+false
+
+; 1 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+{:schema #<SystemMap>}
+; FAIL in skullery.service-test/get-recipe-by-id (form-init14895594661222624564.clj:16):
+; expected:
+true
+
+; actual:
+false
+
+; 1 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+#skullery.schema.Schema{:schema nil, :database nil}
+; FAIL in skullery.service-test/get-recipe-by-id (form-init14895594661222624564.clj:16):
+; expected:
+true
+
+; actual:
+false
+
+; 1 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+; ERROR in skullery.service-test/get-recipe-by-id (component.cljc:13):
+; : Uncaught exception, not in assertion
+; error: clojure.lang.ExceptionInfo: Error in component :server in system com.stuartsierra.component.SystemMap calling #'com.stuartsierra.component/start {:reason :com.stuartsierra.component/component-function-threw-exception, :function #'com.stuartsierra.component/start, :system-key :server, :component #skullery.server.Server{:schema #skullery.schema.Schema{:schema #CompiledSchema<>, :database #skullery.db.Database{:conn #object[org.h2.jdbc.JdbcConnection 0x68492219 "conn7: url=jdbc:h2:./skullery user="]}}, :server nil}, :system #<SystemMap>} (component.cljc:13)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:13:10).
+; No such namespace: schema
+clj꞉skullery.service-test꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:14:10).
+; No such namespace: schema
+clj꞉skullery.service-test꞉> 
+nil
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/test-system
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/q
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+#skullery.schema.Schema{:schema #CompiledSchema<>, :database #skullery.db.Database{:conn #object[org.h2.jdbc.JdbcConnection 0x5825ce2d conn8: url=jdbc:h2:./skullery user=]}}
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Evaluating file: service_test.clj
+; Syntax error compiling at (test/skullery/service_test.clj:32:27).
+; No such namespace: service
+; Evaluation of file service_test.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+#skullery.schema.Schema{:schema #CompiledSchema<>, :database #skullery.db.Database{:conn #object[org.h2.jdbc.JdbcConnection 0x57fc13b3 conn9: url=jdbc:h2:./skullery user=]}}
+; ERROR in skullery.service-test/get-recipe-by-id (parser.clj:28):
+; : Uncaught exception, not in assertion
+; error: java.lang.IllegalStateException: The provided schema has not been compiled. (parser.clj:28)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/q
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+#skullery.schema.Schema{:schema #CompiledSchema<>, :database #skullery.db.Database{:conn #object[org.h2.jdbc.JdbcConnection 0x6b5be11d conn10: url=jdbc:h2:./skullery user=]}}
+{:data #ordered/map ([:recipe #ordered/map ([:id 1])])}
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Evaluating file: utils.clj
+#'skullery.utils/simplify
+clj꞉skullery.utils꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:20:3).
+; Unable to resolve symbol: simplify in this context
+clj꞉skullery.service-test꞉> 
+nil
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/q
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+#skullery.schema.Schema{:schema #CompiledSchema<>, :database #skullery.db.Database{:conn #object[org.h2.jdbc.JdbcConnection 0x1d4b24ff conn11: url=jdbc:h2:./skullery user=]}}
+{:data {:recipe {:id 1}}}
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running tests for skullery.service-test...
+{:data {:recipe {:id 1}}}
+; FAIL in skullery.service-test/get-recipe-by-id (form-init14895594661222624564.clj:29):
+; expected:
+{:data {:recipe {:id 1}}}
+
+; actual:
+nil
+
+; 1 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: get-recipe-by-id…
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/can-get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+(range (inc 0) (inc 1))
+(1)
+clj꞉skullery.service-test꞉> 
+(range (inc 0) (inc 2))
+(1 2)
+clj꞉skullery.service-test꞉> 
+(in-ns 'user)
+#namespace[user]
+clj꞉user꞉> 
+(-> system :database :conn)
+#object[org.h2.jdbc.JdbcConnection 0x19ac4e7f "conn6: url=jdbc:h2:./skullery user="]
+clj꞉user꞉> 
+(def query {:select [:version] :from [:databaseversion] :order-by [:version :desc]})
+#'user/query
+clj꞉user꞉> 
+(def res (jdbc/execute-one! (-> system :database :conn) (sql/format query) as-lower))
+; Syntax error compiling at (.calva/output-window/output.calva-repl:2107:10).
+; No such namespace: jdbc
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+(def res (jdbc/execute-one! (-> system :database :conn) (sql/format query) as-lower))
+; Syntax error compiling at (.calva/output-window/output.calva-repl:2113:10).
+; Unable to resolve symbol: as-lower in this context
+clj꞉user꞉> 
+(def res (jdbc/execute-one! (-> system :database :conn) (sql/format query)))
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Table "DATABASEVERSION" not found; SQL statement:
+; SELECT version FROM databaseversion ORDER BY version ASC, desc ASC [42102-214]
+clj꞉user꞉> 
+res
+#object[clojure.lang.Var$Unbound 0x7d13bc09 "Unbound: #'user/res"]
+clj꞉user꞉> 
+fos
+; Syntax error compiling at (.calva/output-window/output.calva-repl:1:7987).
+; Unable to resolve symbol: fos in this context
+clj꞉user꞉> 
+(let [query "exists (select * from information_schema.tables)"
+      res (jdbc/execute-one! (-> system :database :conn) [query])])
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Syntax error in SQL statement "[*]exists (select * from information_schema.tables)"; SQL statement:
+; exists (select * from information_schema.tables) [42000-214]
+clj꞉user꞉> 
+(let [query "select * from information_schema.tables"]
+  (jdbc/execute-one! (-> system :database :conn) [query]))
+#:TABLES{:COMMIT_ACTION nil,
+         :LAST_MODIFICATION 27,
+         :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+         :IS_INSERTABLE_INTO "NO",
+         :REMARKS nil,
+         :TABLE_TYPE "BASE TABLE",
+         :TABLE_CATALOG "SKULLERY",
+         :TABLE_NAME "ENUM_VALUES",
+         :STORAGE_TYPE "CACHED",
+         :ROW_COUNT_ESTIMATE 1000,
+         :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+clj꞉user꞉> 
+(let [query "select * from information_schema.tables"]
+  (jdbc/execute! (-> system :database :conn) [query]))
+[#:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "ENUM_VALUES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "CONSTANTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION nil,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "SEQUENCES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "RIGHTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "TRIGGERS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION nil,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "SETTINGS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "VIEWS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "INFORMATION_SCHEMA_CATALOG_NAME",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "ROUTINES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "COLUMNS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "KEY_COLUMN_USAGE",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION nil,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "LOCKS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "DOMAINS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "COLUMN_PRIVILEGES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "SCHEMATA",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 2,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "FIELDS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "CONSTRAINT_COLUMN_USAGE",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION nil,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "SESSION_STATE",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "REFERENTIAL_CONSTRAINTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "TABLE_PRIVILEGES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "PARAMETERS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "TABLES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "ELEMENT_TYPES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "QUERY_STATISTICS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "INDEX_COLUMNS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "ROLES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "CHECK_CONSTRAINTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION nil,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "SESSIONS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 8,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION nil,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "IN_DOUBT",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 0,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "COLLATIONS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "DOMAIN_CONSTRAINTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "SYNONYMS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "USERS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "VIEW",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "TABLE_CONSTRAINTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.table.InformationSchemaTable",
+          :IS_INSERTABLE_INTO "NO",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "INDEXES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1000,
+          :TABLE_SCHEMA "INFORMATION_SCHEMA"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 24,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "EQUIPMENT",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 0,
+          :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 25,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "RECIPEEQUIPMENT",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 0,
+          :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 22,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "RECIPES",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1,
+          :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 27,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "STEPINGREDIENTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 1,
+          :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 23,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "RECIPEINGREDIENTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 2,
+          :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 20,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "INGREDIENTS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 2,
+          :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 21,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "CONVERSIONS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 2,
+          :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 26,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "STEPS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 2,
+          :TABLE_SCHEMA "PUBLIC"}]
+clj꞉user꞉> 
+(let [query "select * from information_schema.tables where table_name = steps"]
+  (jdbc/execute! (-> system :database :conn) [query]))
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "STEPS" not found; SQL statement:
+; select * from information_schema.tables where table_name = steps [42122-214]
+clj꞉user꞉> 
+(let [query "select * from information_schema.tables where table_name = 'steps'"]
+  (jdbc/execute! (-> system :database :conn) [query]))
+[]
+clj꞉user꞉> 
+(let [query "select * from information_schema.tables where table_name = 'STEPS'"]
+  (jdbc/execute! (-> system :database :conn) [query]))
+[#:TABLES{:COMMIT_ACTION nil,
+          :LAST_MODIFICATION 26,
+          :TABLE_CLASS "org.h2.mvstore.db.MVTable",
+          :IS_INSERTABLE_INTO "YES",
+          :REMARKS nil,
+          :TABLE_TYPE "BASE TABLE",
+          :TABLE_CATALOG "SKULLERY",
+          :TABLE_NAME "STEPS",
+          :STORAGE_TYPE "CACHED",
+          :ROW_COUNT_ESTIMATE 2,
+          :TABLE_SCHEMA "PUBLIC"}]
+clj꞉user꞉> 
+(let [query "select * from information_schema.tables where table_name = 'STEPSZ'"]
+  (jdbc/execute-one! (-> system :database :conn) [query]))
+nil
+clj꞉user꞉> 
+(range (inc 1) (inc 1))
+()
+clj꞉user꞉> 
+; Syntax error compiling at (src/skullery/db.clj:41:17).
+; Unable to resolve symbol: as-lower in this context
+clj꞉skullery.db꞉> 
+#'skullery.db/as-lower
+clj꞉skullery.db꞉> 
+#'skullery.db/calculate-migrations
+clj꞉skullery.db꞉> 
+(in-ns 'user)
+#namespace[user]
+clj꞉user꞉> 
+(db/calc)nil
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+(db/calculate-migrations (-> system :database :conn) 1)
+; Execution error (ExceptionInfo) at honey.sql/format-dsl (sql.cljc:1235).
+; These SQL clauses are unknown or have nil values: (quote from)
+clj꞉user꞉> 
+#'skullery.db/calculate-migrations
+clj꞉skullery.db꞉> 
+; Evaluating file: user.clj
+nil
+clj꞉user꞉> 
+(1)
+clj꞉user꞉> 
+(db/calculate-migrations (-> system :database :conn) 2)
+(1 2)
+clj꞉user꞉> 
+; Syntax error compiling at (src/skullery/db.clj:58:5).
+; Unable to resolve symbol: migrate! in this context
+clj꞉skullery.db꞉> 
+; Syntax error compiling at (src/skullery/db.clj:49:5).
+; Unable to resolve symbol: apply-migrations in this context
+clj꞉skullery.db꞉> 
+#'skullery.db/apply-migrations
+clj꞉skullery.db꞉> 
+#'skullery.db/calculate-migrations
+clj꞉skullery.db꞉> 
+#'skullery.db/migrate!
+clj꞉skullery.db꞉> 
+skullery.db.Database
+clj꞉skullery.db꞉> 
+#'skullery.db/new-database
+clj꞉skullery.db꞉> 
+#'skullery.service-test/test-system
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/test-system
+clj꞉skullery.service-test꞉> 
+:stopped
+clj꞉user꞉> 
+; Execution error (ArityException) at skullery.system/new-system (system.clj:12).
+; Wrong number of args (0) passed to: skullery.db/new-database
+clj꞉user꞉> 
+#'skullery.system/new-system
+clj꞉skullery.system꞉> 
+#'user/system
+clj꞉user꞉> 
+; Execution error (IllegalArgumentException) at next.jdbc.protocols/eval26730$fn$G (protocols.clj:34).
+; No implementation of method: :-execute-one of protocol: #'next.jdbc.protocols/Executable found for class: nil
+clj꞉user꞉> 
+skullery.db.Database
+clj꞉skullery.db꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉user꞉> 
+#'user/system
+clj꞉user꞉> 
+:started
+clj꞉user꞉> 
+:stopped
+clj꞉user꞉> 
+#'skullery.db/migrate!
+clj꞉skullery.db꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉user꞉> 
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Column "DESC" not found; SQL statement:
+; SELECT version FROM databaseversion ORDER BY version ASC, desc ASC [42122-214]
+clj꞉user꞉> 
+#'skullery.db/calculate-migrations
+clj꞉skullery.db꞉> 
+; Execution error (NullPointerException) at io.pedestal.http/stop (http.clj:396).
+; Cannot invoke "clojure.lang.IFn.invoke()"
+clj꞉user꞉> 
+required migrations:  ()
+:started
+clj꞉user꞉> 
+#'skullery.service-test/can-open-database-and-apply-migrations
+clj꞉skullery.service-test꞉> 
+; Evaluating file: service_test.clj
+#'skullery.service-test/can-get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Evaluating file: db.clj
+#'skullery.db/list-recipe-equipment
+clj꞉skullery.db꞉> 
+; Evaluating file: service_test.clj
+#'skullery.service-test/can-get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: can-open-database-and-apply-migrations…
+required migrations:  (1)
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:31:16).
+; No such namespace: jdbc
+clj꞉skullery.service-test꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:31:16).
+; No such namespace: jdbc
+clj꞉skullery.service-test꞉> 
+nil
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/can-open-database-and-apply-migrations
+clj꞉skullery.service-test꞉> 
+; Running test: can-open-database-and-apply-migrations…
+required migrations:  ()
+; ERROR in skullery.service-test/can-open-database-and-apply-migrations (prepare.clj:31):
+; : Uncaught exception, not in assertion
+; error: java.lang.ClassCastException: class java.lang.Character cannot be cast to class java.lang.String (java.lang.Character and java.lang.String are in module java.base of loader 'bootstrap') (prepare.clj:31)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'user/sql>
+clj꞉user꞉> 
+#'user/sql>
+clj꞉user꞉> 
+(sql> '{select * from recipes})
+[#:RECIPES{:ID 1, :NAME "Eggs Benedict"}]
+clj꞉user꞉> 
+(sql> '{select table_name from dba_tables})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Table "DBA_TABLES" not found; SQL statement:
+; SELECT table_name FROM dba_tables [42102-214]
+clj꞉user꞉> 
+(sql> '{show tables})
+; Execution error (ExceptionInfo) at honey.sql/format-dsl (sql.cljc:1235).
+; These SQL clauses are unknown or have nil values: show
+clj꞉user꞉> 
+(sql> '{select * from all_tables})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Table "ALL_TABLES" not found; SQL statement:
+; SELECT * FROM all_tables [42102-214]
+clj꞉user꞉> 
+(sql> '{select table_name from information_schema.tables})
+[#:TABLES{:TABLE_NAME "ENUM_VALUES"}
+ #:TABLES{:TABLE_NAME "CONSTANTS"}
+ #:TABLES{:TABLE_NAME "SEQUENCES"}
+ #:TABLES{:TABLE_NAME "RIGHTS"}
+ #:TABLES{:TABLE_NAME "TRIGGERS"}
+ #:TABLES{:TABLE_NAME "SETTINGS"}
+ #:TABLES{:TABLE_NAME "VIEWS"}
+ #:TABLES{:TABLE_NAME "INFORMATION_SCHEMA_CATALOG_NAME"}
+ #:TABLES{:TABLE_NAME "ROUTINES"}
+ #:TABLES{:TABLE_NAME "COLUMNS"}
+ #:TABLES{:TABLE_NAME "KEY_COLUMN_USAGE"}
+ #:TABLES{:TABLE_NAME "LOCKS"}
+ #:TABLES{:TABLE_NAME "DOMAINS"}
+ #:TABLES{:TABLE_NAME "COLUMN_PRIVILEGES"}
+ #:TABLES{:TABLE_NAME "SCHEMATA"}
+ #:TABLES{:TABLE_NAME "FIELDS"}
+ #:TABLES{:TABLE_NAME "CONSTRAINT_COLUMN_USAGE"}
+ #:TABLES{:TABLE_NAME "SESSION_STATE"}
+ #:TABLES{:TABLE_NAME "REFERENTIAL_CONSTRAINTS"}
+ #:TABLES{:TABLE_NAME "TABLE_PRIVILEGES"}
+ #:TABLES{:TABLE_NAME "PARAMETERS"}
+ #:TABLES{:TABLE_NAME "TABLES"}
+ #:TABLES{:TABLE_NAME "ELEMENT_TYPES"}
+ #:TABLES{:TABLE_NAME "QUERY_STATISTICS"}
+ #:TABLES{:TABLE_NAME "INDEX_COLUMNS"}
+ #:TABLES{:TABLE_NAME "ROLES"}
+ #:TABLES{:TABLE_NAME "CHECK_CONSTRAINTS"}
+ #:TABLES{:TABLE_NAME "SESSIONS"}
+ #:TABLES{:TABLE_NAME "IN_DOUBT"}
+ #:TABLES{:TABLE_NAME "COLLATIONS"}
+ #:TABLES{:TABLE_NAME "DOMAIN_CONSTRAINTS"}
+ #:TABLES{:TABLE_NAME "SYNONYMS"}
+ #:TABLES{:TABLE_NAME "USERS"}
+ #:TABLES{:TABLE_NAME "TABLE_CONSTRAINTS"}
+ #:TABLES{:TABLE_NAME "INDEXES"}
+ #:TABLES{:TABLE_NAME "EQUIPMENT"}
+ #:TABLES{:TABLE_NAME "DATABASEVERSION"}
+ #:TABLES{:TABLE_NAME "RECIPEEQUIPMENT"}
+ #:TABLES{:TABLE_NAME "RECIPES"}
+ #:TABLES{:TABLE_NAME "STEPINGREDIENTS"}
+ #:TABLES{:TABLE_NAME "RECIPEINGREDIENTS"}
+ #:TABLES{:TABLE_NAME "INGREDIENTS"}
+ #:TABLES{:TABLE_NAME "CONVERSIONS"}
+ #:TABLES{:TABLE_NAME "STEPS"}]
+clj꞉user꞉> 
+#'skullery.service-test/can-open-database-and-apply-migrations
+clj꞉skullery.service-test꞉> 
+; Running test: can-open-database-and-apply-migrations…
+required migrations:  ()
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:33:17).
+; No such namespace: rs
+clj꞉skullery.service-test꞉> 
+nil
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/can-open-database-and-apply-migrations
+clj꞉skullery.service-test꞉> 
+; Running test: can-open-database-and-apply-migrations…
+required migrations:  ()
+#{RECIPEINGREDIENTS SCHEMATA TABLE_CONSTRAINTS KEY_COLUMN_USAGE ROLES RECIPES INDEX_COLUMNS TABLES FIELDS SESSION_STATE STEPINGREDIENTS ELEMENT_TYPES CONSTRAINT_COLUMN_USAGE VIEWS ENUM_VALUES COLUMN_PRIVILEGES INGREDIENTS COLUMNS DATABASEVERSION SETTINGS CHECK_CONSTRAINTS TABLE_PRIVILEGES IN_DOUBT SYNONYMS QUERY_STATISTICS COLLATIONS STEPS CONSTANTS PARAMETERS INFORMATION_SCHEMA_CATALOG_NAME LOCKS DOMAINS EQUIPMENT SEQUENCES USERS DOMAIN_CONSTRAINTS REFERENTIAL_CONSTRAINTS CONVERSIONS RECIPEEQUIPMENT TRIGGERS RIGHTS ROUTINES INDEXES SESSIONS}
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'user/sql>
+clj꞉user꞉> 
+(sql> '{select table_name from user_tables})
+; Execution error (JdbcSQLSyntaxErrorException) at org.h2.message.DbException/getJdbcSQLException (DbException.java:502).
+; Table "USER_TABLES" not found; SQL statement:
+; SELECT table_name FROM user_tables [42102-214]
+clj꞉user꞉> 
+#'user/sqlr>
+clj꞉user꞉> 
+(sqlr> "show tables")
+[#:TABLES{:TABLE_NAME "CONVERSIONS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "DATABASEVERSION", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "EQUIPMENT", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "INGREDIENTS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "RECIPEEQUIPMENT", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "RECIPEINGREDIENTS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "RECIPES", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "STEPINGREDIENTS", :TABLE_SCHEMA "PUBLIC"}
+ #:TABLES{:TABLE_NAME "STEPS", :TABLE_SCHEMA "PUBLIC"}]
+clj꞉user꞉> 
+#'skullery.service-test/can-open-database-and-apply-migrations
+clj꞉skullery.service-test꞉> 
+; Evaluating file: service_test.clj
+#'skullery.service-test/can-get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Evaluating file: service_test.clj
+#'skullery.service-test/can-get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: can-open-database-and-apply-migrations…
+required migrations:  ()
+; ERROR in skullery.service-test/can-open-database-and-apply-migrations (prepare.clj:32):
+; : Uncaught exception, not in assertion
+; error: java.lang.ClassCastException: class java.lang.Character cannot be cast to class java.lang.String (java.lang.Character and java.lang.String are in module java.base of loader 'bootstrap') (prepare.clj:32)
+; 1 tests finished, problems found. 😭 errors: 1, failures: 0, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/can-open-database-and-apply-migrations
+clj꞉skullery.service-test꞉> 
+; Running test: can-open-database-and-apply-migrations…
+required migrations:  ()
+#{RECIPEINGREDIENTS RECIPES STEPINGREDIENTS INGREDIENTS DATABASEVERSION STEPS EQUIPMENT CONVERSIONS RECIPEEQUIPMENT}
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Syntax error compiling at (test/skullery/service_test.clj:38:5).
+; Unable to resolve symbol: expected-tables in this context
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/expected-tables
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/can-open-database-and-apply-migrations
+clj꞉skullery.service-test꞉> 
+; Running test: can-open-database-and-apply-migrations…
+required migrations:  ()
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/test-system
+clj꞉skullery.service-test꞉> 
+#'skullery.service-test/can-get-recipe-by-id
+clj꞉skullery.service-test꞉> 
+; Running test: can-get-recipe-by-id…
+required migrations:  ()
+; 1 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉skullery.service-test꞉> 
+; Running tests for skullery.service-test...
+required migrations:  ()
+required migrations:  ()
+required migrations:  ()
+; 3 tests finished, all passing 👍, ns: 1, vars: 3
+clj꞉skullery.service-test꞉> 
+; Running all project tests…
+required migrations:  ()
+required migrations:  ()
+required migrations:  ()
+; 3 tests finished, all passing 👍, ns: 1, vars: 3
+clj꞉skullery.service-test꞉> 
+; Running all project tests…
+required migrations:  ()
+required migrations:  ()
+required migrations:  ()
+; 3 tests finished, all passing 👍, ns: 1, vars: 3
+clj꞉skullery.service-test꞉> 

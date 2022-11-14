@@ -1,0 +1,12 @@
+{
+  "calva.replConnectSequences": [
+    {
+      "name": "skullery",
+      "projectType": "Leiningen",
+      "cljsType": "none",
+      "menuSelections": {
+          "leinProfiles": [":dev"]
+      }
+    } 
+  ]
+}

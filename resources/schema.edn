@@ -1,0 +1,72 @@
+{:enums {:Measurement {:description "The dimension being measured"
+                       :values [{:enum-value :MASS :description "The weight of something, stored in grams."}
+                                {:enum-value :VOLUME :description "The volume of something, stored in cm3"}
+                                {:enum-value :LENGTH :description "The length of something, often of regular dimensions, such as ginger, stored in cm."}
+                                {:enum-value :UNIT :description "A discreet amount of something, such as a clove of garlic, or an onion."}]}}
+ :objects {:Ingredient {:description "An ingredient."
+                        :fields {:id {:type Int}
+                                 :name {:type (non-null String)}
+                                 :unit_name {:type String}
+                                 :unit_name_plural {:type String}
+                                 :conversions {:type (list :Conversion)
+                                               :resolve :resolve-conversions}}}
+           :Conversion {:description "A mapping from one measurement system to another, such as mass -> volume.
+                                      There may be multiple mappings with the same to and from fields, provided the
+                                      note is different."
+                        :fields {:id {:type Int}
+                                 :from {:type :Measurement}
+                                 :to {:type :Measurement}
+                                 :from_note {:type String
+                                             :description "A note about the conversion process, such as 'loosly packed'.
+                                                      Displayed when a unit is converted to the 'from' unit. 
+                                                      (conversions can be used in both directions)."}
+                                 :to_note {:type String
+                                           :description "A note about the conversion process, such as 'finely chopped'.
+                                                      Displayed when a unit is converted to the 'to' unit."}
+                                 :multiplier {:type Float}}}
+           :RecipeIngredient {:description "An instance of an ingredient, as used in a recipe."
+                              :fields {:id {:type Int}
+                                       :ingredient {:type :Ingredient}
+                                       :quantity {:type Float}
+                                       :unit {:type :Measurement}}}
+           :Step {:description "A set of grouped instructions, that collectively form a recipe."
+                  :fields {:id {:type Int}
+                           :name {:type (non-null String)}
+                           :body {:type String}
+                           :order {:type Int}
+                           :ingredients {:description "The ingredients used by this step, and their relevant quantities."
+                                         :type (list :RecipeIngredient)
+                                         :resolve :resolve-step-ingredients}}}
+           :Equipment {:description "A tool or non-consumable item needed for a recipe."
+                       :fields {:id {:type Int}
+                                :name {:type (non-null String)}}}
+           :Recipe {:description "A collection of steps required to produce a dish."
+                    :fields {:id {:type Int}
+                             :name {:type (non-null String)}
+                             :steps {:type (list :Step)
+                                     :resolve :resolve-steps}
+                             :ingredients {:type (list :RecipeIngredient)
+                                           :resolve :resolve-recipe-ingredients}
+                             :equipment {:type (list :Equipment)
+                                         :resolve :resolve-recipe-equipment}}}}
+ :queries {:recipe {:type :Recipe
+                    :resolve :resolve-recipe
+                    :args {:id {:type Int}}}
+           :recipes {:type (list :Recipe)
+                     :resolve :resolve-recipes}}
+ :input-objects {:RecipeIngredientInput {:fields {:ingredient_id {:type Int}
+                                                  :quantity {:type Float}
+                                                  :unit {:type :Measurement}}}
+                 :RecipeEquipmentInput {:fields {:equipment_id {:type Int}}}
+                 :StepIngredientInput {:fields {:ingredient_id {:type Int}
+                                                :quantity {:type Float}}}
+                 :StepInput {:fields {:name {:type String}
+                                      :body {:type String}
+                                      :ingredients {:type (list :StepIngredientInput)}}}}
+ :mutations {:add_recipe {:type :Recipe
+                          :description "Creates a new recipe, along with associated ingredients and steps."
+                          :args {:name {:type String}
+                                 :ingredients {:type (list :RecipeIngredientInput)}
+                                 :equipment   {:type (list :RecipeEquipmentInput)}
+                                 :steps {:type (list :StepInput)}}
+                          :resolve :mutation-add-recipe}}}
