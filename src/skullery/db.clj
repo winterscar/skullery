@@ -10,22 +10,30 @@
 (def as-lower "Just a convenient name for the builder function most of the queries use."
   {:builder-fn rs/as-unqualified-lower-maps})
 
-(def final-version
-  "Defines the current database schema version, as used by the migrations
-   process. For whatever version number n is defined here, the 
-   application expects the classpath to contain a folder (migrations/) of sequencial migration
-   files named migration-0.sql, migration-1.sql, ... migration-n.sql"
-  1)
+
+(defn execute-one! [q conn] (as-> (sql/format q) query (jdbc/execute-one! conn query as-lower)))
+(defn execute!
+  "Convenience wrapper around jdbc/execute, that provides honeysql formatting and sensible defaults.
+   Expects a honey-sql compatible query-map, and a something that can produce a db connection.
+   Optionally, provide format-opts to overwrite the defaults for honey-sql, and query-opts to overwrite the
+   defaults for jdbc/execute!."
+  ([q conn] (execute! q conn {} as-lower))
+  ([q conn format-opts execute-opts] (as-> (sql/format q format-opts) query (jdbc/execute! conn query execute-opts))))
+
+(defn exec-file!
+  "Given a database connection and path to a sql resource file, executes the contents
+   of that file against the database."
+  [conn file]
+  (let [sql (-> file io/resource slurp)]
+    (jdbc/execute-one! conn [sql])))
 
 (defn apply-migrations
   "Applies all specified database migrations, where migrations is a seq of migration numbers."
   [conn migrations]
   (doseq [migration migrations]
-    (let [migration-file (str "migrations/migration-" migration ".sql")
-          sql (-> migration-file io/resource slurp)]
-      (jdbc/execute-one! conn [sql])
-      (jdbc/execute-one! conn (sql/format {:insert-into [:databaseversion]
-                                           :values [{:version migration}]})))))
+    (exec-file! conn (str "migrations/migration-" migration ".sql"))
+    (jdbc/execute-one! conn (sql/format {:insert-into [:databaseversion]
+                                         :values [{:version migration}]}))))
 (defn calculate-migrations
   "Creates a migration path from the current database version to the desired version.
    Returns a list of migration numbers to apply."
@@ -46,7 +54,6 @@
   "Tries to migrate the database to version 'to'. no-op if the database is already up to date."
   [conn to]
   (let [required-migrations (calculate-migrations conn to)]
-    (println "required migrations: " required-migrations)
     (apply-migrations conn required-migrations)))
 
 
@@ -75,35 +82,35 @@
     (rs/clob->string v)))
 
 (defn get-recipe-by-id
-  [conn id] 
-  (let [query {:select [:id :name]
-               :from   [:recipes]
-               :where  [:= :recipes.id id]}]
-    (jdbc/execute-one! conn (sql/format query) as-lower)))
+  [conn id]
+  (-> {:select [:id :name]
+       :from   [:recipes]
+       :where  [:= :recipes.id id]}
+      (execute-one! conn)))
 
 (defn list-recipes
   [conn]
-  (let [query {:select [:id :name]
-               :from   [:recipes]}]
-    (jdbc/execute! conn (sql/format query) as-lower)))
+  (-> {:select [:id :name]
+       :from   [:recipes]}
+      (execute! conn)))
 
 (defn list-ingredient-conversions
   [conn ingredient]
   ; because the result contains illegal aliases ('from' and 'to')
   ; we need to use :quoted mode for this query, hence the need for uppercase keywords everywhere.
-  (let [query {:select [:ID [:CONVERT_FROM :from] [:CONVERT_TO :to] :TO_NOTE :FROM_NOTE :MULTIPLIER]
-               :from   [:CONVERSIONS]
-               :where  [:= :INGREDIENT_ID (ingredient :id)]}]
-    (jdbc/execute! conn (sql/format query {:quoted true}) as-lower)))
+  (-> {:select [:ID [:CONVERT_FROM :from] [:CONVERT_TO :to] :TO_NOTE :FROM_NOTE :MULTIPLIER]
+       :from   [:CONVERSIONS]
+       :where  [:= :INGREDIENT_ID (ingredient :id)]}
+      (execute! conn {:quoted true} as-lower)))
 
 (defn list-recipe-ingredients
   [conn recipe]
-  (let [query {:select [[:recipeingredients.id :rid] :quantity :unit
-                        :ingredients/id :ingredients/name :ingredients/unit_name :ingredients/unit_name_plural]
-               :from   [:recipeingredients]
-               :join   [:ingredients [:= :recipeingredients.ingredient_id :ingredients.id]]
-               :where  [:= :recipe_id (:id recipe)]}
-        res  (jdbc/execute! conn (sql/format query) as-lower)]
+  (let [res (-> {:select [[:recipeingredients.id :rid] :quantity :unit
+                          :ingredients/id :ingredients/name :ingredients/unit_name :ingredients/unit_name_plural]
+                 :from   [:recipeingredients]
+                 :join   [:ingredients [:= :recipeingredients.ingredient_id :ingredients.id]]
+                 :where  [:= :recipe_id (:id recipe)]}
+                (execute! conn))]
     (when res
       (map (fn [row] {:id           (:rid row)
                       :quantity     (:quantity row)
@@ -115,23 +122,23 @@
 
 (defn list-recipe-steps
   [conn recipe]
-  (let [query {:select   [:id :name :body :step_order]
-               :from     [:steps]
-               :where    [:= :recipe_id (recipe :id)]
-               :order-by [:step_order]}]
-    (jdbc/execute! conn (sql/format query) as-lower)))
+  (-> {:select   [:id :name :body :step_order]
+       :from     [:steps]
+       :where    [:= :recipe_id (recipe :id)]
+       :order-by [:step_order]}
+      (execute! conn)))
 
 
 (defn list-step-ingredients
   [conn step]
-  (let [query {:select [:stepingredients/quantity
-                        :recipeingredients/unit
-                        :ingredients/id :ingredients/name :ingredients/unit_name :ingredients/unit_name_plural]
-               :from   [:stepingredients]
-               :join   [:recipeingredients [:= :stepingredients.recipe_ingredient_id :recipeingredients.id]
-                        :ingredients       [:= :recipeingredients.ingredient_id :ingredients.id]]
-               :where  [:= :step_id (:id step)]}
-        res  (jdbc/execute! conn (sql/format query) as-lower)]
+  (let [res (-> {:select [:stepingredients/quantity
+                          :recipeingredients/unit
+                          :ingredients/id :ingredients/name :ingredients/unit_name :ingredients/unit_name_plural]
+                 :from   [:stepingredients]
+                 :join   [:recipeingredients [:= :stepingredients.recipe_ingredient_id :recipeingredients.id]
+                          :ingredients       [:= :recipeingredients.ingredient_id :ingredients.id]]
+                 :where  [:= :step_id (:id step)]}
+                (execute! conn))]
     (when res
       (map (fn [row] {:quantity     (:quantity row)
                       :unit         (:unit row)
@@ -142,8 +149,8 @@
 
 (defn list-recipe-equipment
   [conn recipe]
-  (let [query {:select [:id :name]
-               :from   [:recipeequipment]
-               :join   [:equipment [:= :equipment.id :equipment_id]]
-               :where  [:= :recipe_id (:id recipe)]}]
-    (jdbc/execute! conn (sql/format query) as-lower)))
+  (-> {:select [:id :name]
+       :from   [:recipeequipment]
+       :join   [:equipment [:= :equipment.id :equipment_id]]
+       :where  [:= :recipe_id (:id recipe)]}
+      (execute! conn)))
