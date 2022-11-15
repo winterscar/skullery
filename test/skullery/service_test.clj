@@ -15,7 +15,7 @@
   []
   (merge (component/system-map)
          (schema/new-schema)
-         (db/new-database 1 "skullery")))
+         (db/new-database 1 (str "/tmp/.databases/skullery-test-" (random-uuid)))))
 
 (defn ^:private q
   "Extracts the compiled schema and executes a query."
@@ -24,6 +24,10 @@
       (get-in [:schema :schema])
       (lacinia/execute query variables nil)
       simplify))
+
+(defmacro ->conn "Extracts the database connection from a system"
+  [sys]
+  `(-> ~sys :database :conn))
 
 (def expected-tables
   '#{RECIPEINGREDIENTS RECIPES STEPINGREDIENTS
@@ -39,6 +43,7 @@
 
 (deftest can-get-recipe-by-id
   (let [sys (component/start-system (test-system))
+        _   (db/exec-file! (->conn sys) "test-data.sql")
         res (q sys "{recipe(id: 1) { id }}" nil)]
     (is (= {:data {:recipe {:id 1}}} res))
     (component/stop-system sys)))
