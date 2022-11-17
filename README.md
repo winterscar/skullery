@@ -1,6 +1,13 @@
 # skullery
 
-FIXME
+Skullery is a Recipe app that has a *database* of ingredients rather than free text.
+
+This enables many cool features:
+
+- Proper shopping list generation (with categorisation, aggregation, etc…)
+- Consistent scaling and adjustment options
+- Unit swapping on-the-fly
+- Ingredient alternatives suggestions
 
 ## Getting Started
 
@@ -10,6 +17,12 @@ FIXME
    that define routes and responses.
 4. Run your app's tests with `lein test`. Read the tests at test/skullery/service_test.clj.
 5. Learn more! See the [Links section below](#links).
+
+
+Other useful features:
+
+- Measure time of each step to calculate recipe total time
+- Sub-recipes
 
 
 ## Configuration
