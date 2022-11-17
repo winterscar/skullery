@@ -27,7 +27,8 @@
                  ; DB
                  [com.h2database/h2 "2.1.214"]
                  [com.github.seancorfield/next.jdbc "1.3.847"]
-                 [com.github.seancorfield/honeysql "2.4.947"]]
+                 [com.github.seancorfield/honeysql "2.4.947"]
+                 [com.mchange/c3p0 "0.9.5.5"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
   ;; If you use HTTP/2 or ALPN, use the java-agent to pull in the correct alpn-boot dependency

@@ -1,11 +1,16 @@
 (ns skullery.db
   #_{:clj-kondo/ignore [:refer-all]}
-  (:require [clojure.java.io :as io]
+  (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]
+            [clojure.string :as string]
             [com.stuartsierra.component :as component]
             [honey.sql :as sql]
             [next.jdbc :as jdbc]
+            [next.jdbc.connection :as connection]
             [next.jdbc.result-set :as rs]
-            [skullery.db :as db]))
+            [skullery.db :as db]
+            [skullery.utils :refer [file-extension]])
+  (:import (com.mchange.v2.c3p0 ComboPooledDataSource PooledDataSource)))
 
 (def as-lower "Just a convenient name for the builder function most of the queries use."
   {:builder-fn rs/as-unqualified-lower-maps})
@@ -20,11 +25,32 @@
   ([q conn] (execute! q conn {} as-lower))
   ([q conn format-opts execute-opts] (as-> (sql/format q format-opts) query (jdbc/execute! conn query execute-opts))))
 
+(defn edn->sql
+  "Converts a declarative map of data to the sql commands required to create that data.
+   Note that this function performs no validation.
+   Schema:
+   {<table-name> {columns [<foo> <bar> <baz>]
+                  values  [[1 2 3]
+                           [3 4 5]]}}
+   "
+  [edn]
+  (->> edn
+       (map (fn [[table data]] (merge {'insert-into table} data)))
+       (map #(first (sql/format %1 {:inline true})))
+       (string/join "; ")))
+
+
+
 (defn exec-file!
-  "Given a database connection and path to a sql resource file, executes the contents
-   of that file against the database."
+  "Given a database connection and path to a sql or edn resource file, executes the contents
+   of that file against the database. Check the edn->sql method for the edn format."
   [conn file]
-  (let [sql (-> file io/resource slurp)]
+  (let [file-contents (-> file io/resource slurp)
+        extension     (file-extension file)
+        sql           (case extension
+                        ".sql" file-contents
+                        ".edn" (-> file-contents edn/read-string edn->sql)
+                        :default (throw (Exception. "Invalid file type specified. File extension must be one of .sql, .edn")))]
     (jdbc/execute-one! conn [sql])))
 
 (defn apply-migrations
@@ -56,20 +82,25 @@
   (let [required-migrations (calculate-migrations conn to)]
     (apply-migrations conn required-migrations)))
 
-
-(defrecord Database [version name]
+(defrecord Database [conn version name persist]
   component/Lifecycle
   (start [this]
-    (let [conn (-> {:dbtype "h2" :dbname name}
-                   jdbc/get-datasource
-                   jdbc/get-connection)]
+    (let [dbtype (if persist "h2" "h2:mem")
+          db-spec {:dbtype dbtype :dbname name :minPoolSize 1 :initialPoolSize 1}
+          ^PooledDataSource conn (connection/->pool ComboPooledDataSource db-spec)]
       (migrate! conn version)
       (assoc this :conn conn)))
 
-  (stop [this] (assoc this :conn nil)))
+  (stop [this]
+    (when conn (.close conn))
+    (println "Closing database connection")
+    (assoc this :conn nil)))
 
-(defn new-database [version name]
-  {:database (map->Database {:version version :name name})})
+(defn new-database 
+  ([version name]
+   {:database (map->Database {:version version :name name :persist true})})
+  ([version name persist]
+   {:database (map->Database {:version version :name name :persist persist})}))
 
 ;; Makes CHARACTER LARGE OBJECT fields return strings.
 ;; If performance starts to lag, consider streaming the

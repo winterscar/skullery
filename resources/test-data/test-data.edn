@@ -1,0 +1,6 @@
+{recipes
+ {columns [id name]
+  values  [[1 "Pancakes"]
+           [2 "Eggs Benedict"]
+           [3 "Wafffles"]
+           [4 "Chakshuka"]]}}

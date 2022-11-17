@@ -37,3 +37,8 @@
        :else
        node))
    m))
+
+
+; from https://rosettacode.org/wiki/Extract_file_extension#Clojure
+(defn file-extension [s]
+  (second (re-find #"(\.[a-zA-Z0-9]+)$" s)))
