@@ -9,21 +9,43 @@
             [next.jdbc.connection :as connection]
             [next.jdbc.result-set :as rs]
             [skullery.db :as db]
-            [skullery.utils :refer [file-extension]])
+            [io.pedestal.log :as log]
+            [skullery.utils :refer [file-extension]]
+            [medley.core :as medley])
   (:import (com.mchange.v2.c3p0 ComboPooledDataSource PooledDataSource)))
 
 (def as-lower "Just a convenient name for the builder function most of the queries use."
   {:builder-fn rs/as-unqualified-lower-maps})
 
+(defn drop-empty-where
+  "Drops the where clause from a SQL query
+   if the contents of that where is just [:and nil nil ...]"
+  [k v]
+  (not (and (= k :where)
+            (or
+             (nil? v)
+             (= [:and] (remove nil? v))))))
 
-(defn execute-one! [q conn] (as-> (sql/format q) query (jdbc/execute-one! conn query as-lower)))
+
+(defn execute-one! [q conn]
+  (log/info :db/about-to-execute q)
+  (as-> q query
+    (medley/filter-kv drop-empty-where query)
+    (sql/format query)
+    (jdbc/execute-one! conn query as-lower)))
+
 (defn execute!
   "Convenience wrapper around jdbc/execute, that provides honeysql formatting and sensible defaults.
    Expects a honey-sql compatible query-map, and a something that can produce a db connection.
    Optionally, provide format-opts to overwrite the defaults for honey-sql, and query-opts to overwrite the
    defaults for jdbc/execute!."
   ([q conn] (execute! q conn {} as-lower))
-  ([q conn format-opts execute-opts] (as-> (sql/format q format-opts) query (jdbc/execute! conn query execute-opts))))
+  ([q conn format-opts execute-opts]
+   (log/info :db/about-to-execute q)
+   (as-> q query
+     (medley/filter-kv drop-empty-where query)
+     (sql/format query format-opts)
+     (jdbc/execute! conn query execute-opts))))
 
 (defn edn->sql
   "Converts a declarative map of data to the sql commands required to create that data.
@@ -89,11 +111,13 @@
           db-spec {:dbtype dbtype :dbname name :minPoolSize 1 :initialPoolSize 1}
           ^PooledDataSource conn (connection/->pool ComboPooledDataSource db-spec)]
       (migrate! conn version)
+      (log/info :component/database {:state "started"
+                                     :spec db-spec})
       (assoc this :conn conn)))
 
   (stop [this]
     (when conn (.close conn))
-    (println "Closing database connection")
+    (log/info :component/database {:state "stopped"})
     (assoc this :conn nil)))
 
 (defn new-database 
@@ -112,6 +136,25 @@
   (read-column-by-index [^java.sql.Clob v _2 _3]
     (rs/clob->string v)))
 
+
+(defn make-cursor-clause
+  "Given a map decoded from the page field of a request,
+   produces a vector that can be used as the where clause
+   of a honeysql query to get that specific page."
+  [{:keys [before after key]}]
+  (when key
+    (if before
+      [:< key before]
+      [:> key after])))
+
+(defn count-rows
+  [conn table filters]
+  (-> {:select [[:%count.* :total]]
+       :from [table]
+       :where filters}
+      (execute-one! conn)
+      :total))
+
 (defn get-recipe-by-id
   [conn id]
   (-> {:select [:id :name]
@@ -120,10 +163,19 @@
       (execute-one! conn)))
 
 (defn list-recipes
-  [conn]
-  (-> {:select [:id :name]
-       :from   [:recipes]}
-      (execute! conn)))
+  [conn filters cursor count]
+  (let [filter-clause (when (:search_query filters)
+                        [:ilike :name (str "%" (:search_query filters) "%")])
+        res (-> {:select   [:id :name]
+                 :from     [:recipes]
+                 :where    [:and
+                            filter-clause
+                            (make-cursor-clause cursor)]
+                 :order-by [[:id :asc]]
+                 :limit (inc count)}
+                (execute! conn))
+        tot (count-rows conn :recipes filter-clause)]
+    [res tot]))
 
 (defn list-ingredient-conversions
   [conn ingredient]
@@ -185,3 +237,34 @@
        :join   [:equipment [:= :equipment.id :equipment_id]]
        :where  [:= :recipe_id (:id recipe)]}
       (execute! conn)))
+
+(defn list-equipment
+  [conn filters cursor count]
+  (let [filter-clause (when (:search_query filters)
+                        [:ilike :name (str "%" (:search_query filters) "%")])
+        res (-> {:select   [:id :name]
+                 :from     [:equipment]
+                 :where    [:and
+                            filter-clause
+                            (make-cursor-clause cursor)]
+                 :order-by [[:id :asc]]
+                 :limit (inc count)}
+                (execute! conn))
+        tot (count-rows conn :equipment filter-clause)]
+    [res tot]))
+
+(defn list-ingredients
+  [conn filters cursor count]
+  (let [filter-clause (when (:search_query filters)
+                        [:ilike :name (str "%" (:search_query filters) "%")])
+        res (-> {:select [:id        :name
+                          :unit_name :unit_name_plural]
+                 :from   [:ingredients]
+                 :where    [:and
+                            filter-clause
+                            (make-cursor-clause cursor)]
+                 :order-by [[:id :asc]]
+                 :limit (inc count)}
+                (execute! conn))
+        tot (count-rows conn :ingredients filter-clause)]
+    [res tot]))

@@ -3,4 +3,15 @@
   values  [[1 "Pancakes"]
            [2 "Eggs Benedict"]
            [3 "Wafffles"]
-           [4 "Chakshuka"]]}}
+           [4 "Chakshuka"]]}
+ ingredients
+ {columns [id  name             unit_name unit_name_plural]
+  values  [[1 "Eggs"            "Egg"     "Eggs"]
+           [2 "Chicken breasts" "Breast"  "Breasts"]
+           [3 "Garlic"          "Clove"   "Cloves"]
+           [4 "Salt"            "Pinch"   "Pinches"]]}
+ conversions
+ {columns [id ingredient_id convert_from convert_to from_note to_note                             multiplier]
+  values  [[1 1             "UNIT"       "MASS"     ""        "Total weight, including shell"     50]
+           [2 1             "UNIT"       "MASS"     ""        "Egg weight only, excluding shell"  30]
+           [3 2             "UNIT"       "VOLUME"   "Medium"  "Ground chicken"                    224]]}}

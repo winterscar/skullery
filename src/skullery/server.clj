@@ -13,7 +13,8 @@
                             (http/create-server)
                             (http/start))))
   (stop [this]
-    (http/stop server)
+    (when server
+      (http/stop server))
     (assoc this :server nil)))
 
 (defn new-server []

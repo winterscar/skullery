@@ -1,6 +1,7 @@
 (ns skullery.utils
   (:require
-   [clojure.walk :as walk])
+   [clojure.walk :as walk]
+   [clojure.edn :as edn])
   (:import
    (clojure.lang IPersistentMap)))
 
@@ -42,3 +43,17 @@
 ; from https://rosettacode.org/wiki/Extract_file_extension#Clojure
 (defn file-extension [s]
   (second (re-find #"(\.[a-zA-Z0-9]+)$" s)))
+
+(defn base64->edn
+  "Base64 decodes any clojure data structure serialized as EDN."
+  [to-decode]
+  (edn/read-string
+   (String. (.decode (java.util.Base64/getDecoder) to-decode))))
+
+(defn edn->base64
+  "Base64 encodes any clojure data structure that can be serialized as EDN."
+  [to-encode]
+  (->> (str to-encode)
+       (.getBytes)
+       (.encode (java.util.Base64/getEncoder))
+       String.))

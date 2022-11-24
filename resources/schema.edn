@@ -3,7 +3,16 @@
                                 {:enum-value :VOLUME :description "The volume of something, stored in cm3"}
                                 {:enum-value :LENGTH :description "The length of something, often of regular dimensions, such as ginger, stored in cm."}
                                 {:enum-value :UNIT :description "A discreet amount of something, such as a clove of garlic, or an onion."}]}}
- :objects {:Ingredient {:description "An ingredient."
+ :objects {:PageInfo {:description "Metadata about the current page in a paginated list of results."
+                      :fields {:previous_page {:type String
+                                               :description "An opaque value that can be passed
+                                                    to the subsequent query to get the results that
+                                                    preceed this page, if any."}
+                               :next_page {:type String
+                                           :description "An opaque value that can be passed
+                                                to the subsequent query to get the results that
+                                                follow this page, if any."}}}
+           :Ingredient {:description "An ingredient."
                         :fields {:id {:type Int}
                                  :name {:type (non-null String)}
                                  :unit_name {:type String}
@@ -40,7 +49,7 @@
            :Equipment {:description "A tool or non-consumable item needed for a recipe."
                        :fields {:id {:type Int}
                                 :name {:type (non-null String)}}}
-           :Recipe {:description "A collection of steps required to produce a dish."
+           :Recipe {:description "A collection of steps, tools and ingredients required to produce a dish."
                     :fields {:id {:type Int}
                              :name {:type (non-null String)}
                              :steps {:type (list :Step)
@@ -48,13 +57,40 @@
                              :ingredients {:type (list :RecipeIngredient)
                                            :resolve :resolve-recipe-ingredients}
                              :equipment {:type (list :Equipment)
-                                         :resolve :resolve-recipe-equipment}}}}
+                                         :resolve :resolve-recipe-equipment}}}
+           :RecipesResult {:description "A paginated list of recipes and associated metadata."
+                           :fields {:values {:type (list :Recipe)}
+                                    :page_info {:type (non-null :PageInfo)}
+                                    :total_count {:type (non-null Int)}}}
+           :IngredientsResult {:description "A paginated list of ingredients and associated metadata."
+                               :fields {:values {:type (list :Ingredient)}
+                                        :page_info {:type (non-null :PageInfo)}
+                                        :total_count {:type (non-null Int)}}}
+           :EquipmentResult {:description "A paginated list of equipment and associated metadata."
+                               :fields {:values {:type (list :Equipment)}
+                                        :page_info {:type (non-null :PageInfo)}
+                                        :total_count {:type (non-null Int)}}}}
  :queries {:recipe {:type :Recipe
                     :resolve :resolve-recipe
                     :args {:id {:type Int}}}
-           :recipes {:type (list :Recipe)
-                     :resolve :resolve-recipes}}
- :input-objects {:RecipeIngredientInput {:fields {:ingredient_id {:type Int}
+           :recipes {:type :RecipesResult
+                     :resolve :resolve-recipes
+                     :args {:filter {:type :RecipesFilterQueryInput}
+                            :page {:description "An optional previous_page or next_page value,
+                                                 as returned by the PageInfo object on a paginated query."
+                                   :type String}}}
+           :ingredients {:type :IngredientsResult
+                         :resolve :resolve-ingredients
+                         :args {:page {:description "An optional previous_page or next_page value,
+                                                 as returned by the PageInfo object on a paginated query."
+                                       :type String}}}
+           :equipment {:type :EquipmentResult
+                       :resolve :resolve-equipment
+                       :args {:page {:description "An optional previous_page or next_page value,
+                                                 as returned by the PageInfo object on a paginated query."
+                                     :type String}}}}
+ :input-objects {:RecipesFilterQueryInput {:fields {:search_query {:type String}}}
+                 :RecipeIngredientInput {:fields {:ingredient_id {:type Int}
                                                   :quantity {:type Float}
                                                   :unit {:type :Measurement}}}
                  :RecipeEquipmentInput {:fields {:equipment_id {:type Int}}}

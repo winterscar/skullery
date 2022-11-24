@@ -41,3 +41,4 @@ build/
 
 # Calva
 .calva/output-window/
+.lsp/.cache/db.transit.json
