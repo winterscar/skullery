@@ -30,14 +30,14 @@ jobs:
       id-token: write
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Install dependencies
         run: lein deps
         
       - name: Build uberjar
         run: lein uberjar
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
