@@ -42,4 +42,5 @@
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "skullery.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.10"]]}
              :uberjar {:aot [skullery.main]}}
+  :repl-options {:init-ns user}
   :main ^{:skip-aot true} skullery.main)
