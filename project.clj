@@ -41,5 +41,5 @@
   ;:java-agents [[org.mortbay.jetty.alpn/jetty-alpn-agent "2.0.5"]]
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "skullery.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.10"]]}
-             :uberjar {:aot [skullery.server]}}
-  :main ^{:skip-aot true} skullery.server)
+             :uberjar {:aot [skullery.main]}}
+  :main ^{:skip-aot true} skullery.main)
