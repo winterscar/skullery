@@ -57,3 +57,13 @@
        (.getBytes)
        (.encode (java.util.Base64/getEncoder))
        String.))
+
+(defmacro ==>
+  "Takes two forms, executes them in order
+   and returns the result of executing the first.
+   Useful for doing something, logging that it's done,
+   and then returning the result of the execution"
+  [to-return to-execute]
+  `(let [ret# ~to-return]
+     ~to-execute
+     ret#))

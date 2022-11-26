@@ -10,7 +10,7 @@
             [next.jdbc.result-set :as rs]
             [skullery.db :as db]
             [io.pedestal.log :as log]
-            [skullery.utils :refer [file-extension]]
+            [skullery.utils :refer [file-extension ==>]]
             [medley.core :as medley])
   (:import (com.mchange.v2.c3p0 ComboPooledDataSource PooledDataSource)))
 
@@ -28,7 +28,7 @@
 
 
 (defn execute-one! [q conn]
-  (log/info :db/about-to-execute q)
+  (log/debug ::about-to-execute q)
   (as-> q query
     (medley/filter-kv drop-empty-where query)
     (sql/format query)
@@ -41,7 +41,7 @@
    defaults for jdbc/execute!."
   ([q conn] (execute! q conn {} as-lower))
   ([q conn format-opts execute-opts]
-   (log/info :db/about-to-execute q)
+   (log/debug ::about-to-execute q)
    (as-> q query
      (medley/filter-kv drop-empty-where query)
      (sql/format query format-opts)
@@ -102,6 +102,8 @@
   "Tries to migrate the database to version 'to'. no-op if the database is already up to date."
   [conn to]
   (let [required-migrations (calculate-migrations conn to)]
+    (when (seq required-migrations)
+      (log/info ::migrate {:migrations required-migrations}))
     (apply-migrations conn required-migrations)))
 
 (defrecord Database [conn version name persist]
@@ -111,14 +113,14 @@
           db-spec {:dbtype dbtype :dbname name :minPoolSize 1 :initialPoolSize 1}
           ^PooledDataSource conn (connection/->pool ComboPooledDataSource db-spec)]
       (migrate! conn version)
-      (log/info :component/database {:state "started"
-                                     :spec db-spec})
-      (assoc this :conn conn)))
+      (==> (assoc this :conn conn)
+           (log/info :component/database {:state "started"
+                                          :spec db-spec}))))
 
   (stop [this]
     (when conn (.close conn))
-    (log/info :component/database {:state "stopped"})
-    (assoc this :conn nil)))
+    (==> (assoc this :conn nil)
+         (log/info :component/database {:state "stopped"}))))
 
 (defn new-database 
   ([version name]

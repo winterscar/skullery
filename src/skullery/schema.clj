@@ -9,7 +9,7 @@
             [expound.alpha :as expound]
             [skullery.db :as db]
             [io.pedestal.log :as log]
-            [skullery.utils :as utils]
+            [skullery.utils :refer [ ==> ] :as utils]
             [medley.core :as medley]))
 
 (defn encode-page-info
@@ -113,8 +113,12 @@
 
 (defrecord Schema [schema database]
   component/Lifecycle
-  (start [this] (assoc this :schema (skullery-schema this)))
-  (stop [this] (assoc this :schema nil)))
+  (start [this]
+    (==> (assoc this :schema (skullery-schema this))
+         (log/info :component/schema {:state "started"})))
+  (stop [this]
+    (==> (assoc this :schema nil)
+         (log/info :component/schema {:state "stopped"}))))
 
 (defn new-schema
   []
