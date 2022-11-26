@@ -9,7 +9,7 @@
             [expound.alpha :as expound]
             [skullery.db :as db]
             [io.pedestal.log :as log]
-            [skullery.utils :as utils]
+            [skullery.utils :refer [ ==> ] :as utils]
             [medley.core :as medley]))
 
 (defn encode-page-info
@@ -76,10 +76,12 @@
 
 (defn resolve-equipment [conn]
   (fn [_ args _]
+    (log/info :schema/resolve-eqipment args)
     (resolve-paginated-query conn db/list-equipment args 25)))
 
 (defn resolve-ingredients [conn]
   (fn [_ args _]
+    (log/info :schema/resolve-ingredients args)
     (resolve-paginated-query conn db/list-ingredients args 25)))
 
 
@@ -113,8 +115,12 @@
 
 (defrecord Schema [schema database]
   component/Lifecycle
-  (start [this] (assoc this :schema (skullery-schema this)))
-  (stop [this] (assoc this :schema nil)))
+  (start [this]
+    (==> (assoc this :schema (skullery-schema this))
+         (log/info :component/schema {:state "started"})))
+  (stop [this]
+    (==> (assoc this :schema nil)
+         (log/info :component/schema {:state "stopped"}))))
 
 (defn new-schema
   []

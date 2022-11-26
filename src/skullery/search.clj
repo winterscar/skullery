@@ -5,7 +5,8 @@
             [clucie.store :as store]
             [com.stuartsierra.component :as component]
             [io.pedestal.log :as log]
-            [skullery.db :as db]))
+            [skullery.db :as db]
+            [skullery.utils :refer [ ==> ]]))
 
 (def indexed-keys
   "An array of keys to be indexed by lucene."
@@ -141,21 +142,23 @@
                :search (make-search index-store)}
           done-chan (-keep-index-updated chan (:conn database) index-store analyzer)]
       (update-index-on-boot (:conn database) index-store :recipes analyzer)
-      (log/info :component/search {:state "started"})
-      (log/trace :component/search {:analyzer analyzer, :index-store index-store})
-      (assoc this
-             :analyzer analyzer
-             :index index-store
-             :channel chan
-             :api api
-             :done-chan done-chan)))
+      (==> 
+       (assoc this
+              :analyzer analyzer
+              :index index-store
+              :channel chan
+              :api api
+              :done-chan done-chan)
+       (do
+         (log/info :component/search {:state "started"})
+         (log/debug :component/search {:analyzer analyzer, :index-store index-store})))))
 
   (stop [this]
-    ; close the channel    
-    (log/info :component/search {:state "stopped"})
-    (close! channel) ; close the channel, then
-    (<!! done-chan) ; wait for all indexing to be complete before stopping
-    (assoc this :analyzer nil :index nil :channel nil :done-chan nil :api :nil)))
+        (==> 
+         (do (close! channel) ; close the channel
+             (<!! done-chan) ; wait for the indexing to finish
+             (assoc this :analyzer nil :index nil :channel nil :done-chan nil :api :nil))
+         (log/info :component/search {:state "stopped"}))))
 
 (defn new-search []
   {:search (-> {} map->Search (component/using [:database]))})
