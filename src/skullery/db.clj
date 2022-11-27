@@ -11,7 +11,8 @@
             [skullery.db :as db]
             [io.pedestal.log :as log]
             [skullery.utils :refer [file-extension ==>]]
-            [medley.core :as medley])
+            [medley.core :as medley]
+            [malli.core :as m])
   (:import (com.mchange.v2.c3p0 ComboPooledDataSource PooledDataSource)))
 
 (def as-lower "Just a convenient name for the builder function most of the queries use."
@@ -270,3 +271,55 @@
                 (execute! conn))
         tot (count-rows conn :ingredients filter-clause)]
     [res tot]))
+
+;; Mutations
+
+(defn create-recipe
+  [conn {:keys [equipment ingredients steps] :as recipe}]
+  ; In a transaction:
+  (jdbc/with-transaction [tx conn]
+    ; Create the recipe
+    (let [recipe-name (:name recipe)
+          recipe-id (-> {:select :id
+                         :from [[[:new-table
+                                  {:insert-into :recipes
+                                   :values [{:name recipe-name}]}]]]}
+                        (execute-one! tx)
+                        :id)]
+      
+      ; Create all the RecipeIngredients
+      (when (seq ingredients) 
+        (-> {:insert-into :recipeingredients
+             :columns [:ingredient_id :quantity :unit :recipe_id]
+             :values (for [ing ingredients]
+                       [(:ingredient_id ing) (:quantity ing)
+                        (-> ing :unit name)  recipe-id])}
+            (execute-one! tx)))
+      
+      ; Create all the RecipeEquipment
+      (when (seq equipment)
+        (-> {:insert-into :recipeequipment
+             :columns [:equipment_id :recipe_id]
+             :values (for [eq equipment]
+                       [(:equipment_id eq) recipe-id])}
+            (execute-one! tx)))
+      
+      ; Create all the StepIngredients
+      (let [step-ingredients (for [step steps
+                                   :let [step-ingredients (:ingredients step)]
+                                   ing step-ingredients]
+                               ing)]
+        (when (seq step-ingredients)
+          (-> {:insert-into :stepingredients
+               :columns [:ingredient_id :quantity :recipe_id]
+                   ; for each ingredient of each step
+               :values step-ingredients}
+              (execute-one! tx))))
+      
+      ; Create all the Steps
+      (when (seq steps)
+        (-> {:insert-into :steps
+             :columns [:name :body :recipe_id]
+             :values (for [step steps]
+                       [(:name step) (:body step) recipe-id])}
+            (execute-one! tx))))))

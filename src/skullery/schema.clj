@@ -84,6 +84,11 @@
     (log/info :schema/resolve-ingredients args)
     (resolve-paginated-query conn db/list-ingredients args 25)))
 
+(defn mutation-add-recipe [conn]
+  (fn [_ recipe _]
+    (log/info :schema/add-recipe recipe)
+    (db/create-recipe conn recipe)))
+
 
 (defn compile-explain
   "Wraps schema/compile with expound, so that any spec errors
@@ -110,7 +115,7 @@
           :resolve-equipment (resolve-equipment conn)
           :resolve-ingredients (resolve-ingredients conn)
         ;; MUTATIONS
-          :mutation-add-recipe (fn [_ _ _] {:foo 0})})
+          :mutation-add-recipe (mutation-add-recipe conn)})
         compile-explain)))
 
 (defrecord Schema [schema database]

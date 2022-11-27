@@ -72,7 +72,7 @@
                                         :total_count {:type (non-null Int)}}}}
  :queries {:recipe {:type :Recipe
                     :resolve :resolve-recipe
-                    :args {:id {:type Int}}}
+                    :args {:id {:type (non-null Int)}}}
            :recipes {:type :RecipesResult
                      :resolve :resolve-recipes
                      :args {:filter {:type :RecipesFilterQueryInput}

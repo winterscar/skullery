@@ -9,21 +9,17 @@ This enables many cool features:
 - Unit swapping on-the-fly
 - Ingredient alternatives suggestions
 
-## Getting Started
-
-1. Start the application: `lein run`
-2. Go to [localhost:8080](http://localhost:8080/) to see: `Hello World!`
-3. Read your app's source code at src/skullery/service.clj. Explore the docs of functions
-   that define routes and responses.
-4. Run your app's tests with `lein test`. Read the tests at test/skullery/service_test.clj.
-5. Learn more! See the [Links section below](#links).
-
-
 Other useful features:
 
 - Measure time of each step to calculate recipe total time
 - Sub-recipes
+- What can I make with these ingredients?
 
+## Getting Started
+
+1. Start the application: `lein run`
+2. Go to [localhost:8888/ide](http://localhost:8888/ide) to see the graphql ide
+4. Run tests with `lein test`. Read the tests at test/skullery/*_test.clj.
 
 ## Configuration
 
@@ -33,10 +29,7 @@ To learn more about configuring Logback, read its [documentation](http://logback
 
 ## Developing your service
 
-1. Start a new REPL: `lein repl`
-2. Start your service in dev-mode: `(def dev-serv (run-dev))`
-3. Connect your editor to the running REPL session.
-   Re-evaluated code will be seen immediately in the service.
+1. Jack in using calva, and select the skullery profile.
 
 ### [Docker](https://www.docker.com/) container support
 
@@ -44,15 +37,3 @@ To learn more about configuring Logback, read its [documentation](http://logback
 2. Build an uberjar of your service: `lein uberjar`
 3. Build a Docker image: `sudo docker build -t skullery .`
 4. Run your Docker image: `docker run -p 8080:8080 skullery`
-
-### [OSv](http://osv.io/) unikernel support with [Capstan](http://osv.io/capstan/)
-
-1. Build and run your image: `capstan run -f "8080:8080"`
-
-Once the image it built, it's cached.  To delete the image and build a new one:
-
-1. `capstan rmi skullery; capstan build`
-
-
-## Links
-* [Other Pedestal examples](http://pedestal.io/samples)
