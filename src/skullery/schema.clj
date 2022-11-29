@@ -89,6 +89,16 @@
     (log/info :schema/add-recipe recipe)
     (db/create-recipe conn recipe)))
 
+(defn mutation-add-ingredient [conn]
+  (fn [_ ingredient _]
+    (log/info :schema/add-ingredient ingredient)
+    (db/create-ingredient conn ingredient)))
+
+(defn mutation-add-equipment [conn]
+  (fn [_ equipment _]
+    (log/info :schema/add-equipment equipment)
+    (db/create-equipment conn equipment)))
+
 
 (defn compile-explain
   "Wraps schema/compile with expound, so that any spec errors
@@ -115,7 +125,9 @@
           :resolve-equipment (resolve-equipment conn)
           :resolve-ingredients (resolve-ingredients conn)
         ;; MUTATIONS
-          :mutation-add-recipe (mutation-add-recipe conn)})
+          :mutation-add-recipe (mutation-add-recipe conn)
+          :mutation-add-ingredient (mutation-add-ingredient conn)
+          :mutation-add-equipment (mutation-add-equipment conn)})
         compile-explain)))
 
 (defrecord Schema [schema database]

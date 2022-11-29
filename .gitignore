@@ -1,6 +1,8 @@
 # Project related
 *.mv.db
 *.trace.db
+#some db temp files
+skullery/
 
 # Java related
 pom.xml

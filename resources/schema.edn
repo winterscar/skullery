@@ -7,11 +7,15 @@
                       :fields {:previous_page {:type String
                                                :description "An opaque value that can be passed
                                                     to the subsequent query to get the results that
-                                                    preceed this page, if any."}
+                                                    preceed this page, if any.
+                                                    You *must* discard this token if you change
+                                                    the query filters or sort order."}
                                :next_page {:type String
                                            :description "An opaque value that can be passed
                                                 to the subsequent query to get the results that
-                                                follow this page, if any."}}}
+                                                follow this page, if any.
+                                                You *must* discard this token if you change
+                                                the query filters or sort order."}}}
            :Ingredient {:description "An ingredient."
                         :fields {:id {:type Int}
                                  :name {:type (non-null String)}
@@ -105,7 +109,23 @@
                                  :ingredients {:type (list :RecipeIngredientInput)}
                                  :equipment   {:type (list :RecipeEquipmentInput)}
                                  :steps {:type (list :StepInput)}}
-                          :resolve :mutation-add-recipe}}}
+                          :resolve :mutation-add-recipe}
+             :add_ingredient {:type :Ingredient
+                               :description "Creates a new ingredient."
+                               :args {:name {:type (non-null String)}
+                                      :unit_name {:type String
+                                                  :description "The name of one of this ingredient. For example,
+                                                                the unit name for garlic would be 'clove', and
+                                                                the unit name for ontion would be 'onion'.
+                                                                Some ingredients have no concept of 'unit', in
+                                                                which case this field should be left blank."}
+                                      :unit_name_plural {:type String
+                                                         :description "The name of more than one unit of this ingredient."}}
+                               :resolve :mutation-add-ingredient}
+             :add_equipment   {:type :Equipment
+                               :description "Creates a new item of equipment."
+                               :args {:name {:type (non-null String)}}
+                               :resolve :mutation-add-equipment}}}
 
 ;; :mutations {:add-recipe nil
 ;;             :edit-recipe   nil

@@ -322,4 +322,27 @@
              :columns [:name :body :recipe_id]
              :values (for [step steps]
                        [(:name step) (:body step) recipe-id])}
-            (execute-one! tx))))))
+            (execute-one! tx)))
+      (get-recipe-by-id tx recipe-id))))
+
+(defn create-ingredient
+  [conn ingredient]
+  (let [{:keys [id]}
+        (-> {:select :id
+             :from [[[:new-table
+                      {:insert-into :ingredients
+                       :values [(select-keys
+                                  ingredient
+                                  [:name :unit_name :unit_name_plural])]}]]]}
+            (execute-one! conn))]
+    (assoc ingredient :id id)))
+
+(defn create-equipment
+  [conn {:keys [name]}]
+  (let [{:keys [id]} (-> {:select :id
+                :from [[[:new-table
+                         {:insert-into :equipment
+                          :values [{:name name}]}]]]}
+               (execute-one! conn))]
+    {:id id
+     :name name}))
