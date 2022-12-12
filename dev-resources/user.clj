@@ -55,7 +55,7 @@
 
 
 (defn sql> [query]
-  (jdbc/execute! (-> system :database :conn) (sql/format query)))
+  (jdbc/execute! (-> system :database :conn) (sql/format query) {:return-keys true}))
 
 (defn sqlr> [query]
   (jdbc/execute! (-> system :database :conn) [query]))

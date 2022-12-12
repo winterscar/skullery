@@ -4,6 +4,7 @@
             [clojure.java.io :as io]
             [clojure.string :as string]
             [com.stuartsierra.component :as component]
+            [com.walmartlabs.lacinia.resolve :as lacinia.resolve]
             [honey.sql :as sql]
             [next.jdbc :as jdbc]
             [next.jdbc.connection :as connection]
@@ -28,25 +29,27 @@
              (= [:and] (remove nil? v))))))
 
 
-(defn execute-one! [q conn]
+(defn -execute-something!
+  "Convenience wrapper around jdbc execute functions, that provides honeysql formatting and sensible defaults.
+   Expects a honey-sql compatible query-map, and a something that can produce a db connection.
+   Optionally, provide format-opts to overwrite the defaults for honey-sql, and query-opts to overwrite the
+   defaults for jdbc/execute!." 
+  [m q conn format-opts execute-opts]
   (log/debug ::about-to-execute q)
   (as-> q query
     (medley/filter-kv drop-empty-where query)
-    (sql/format query)
-    (jdbc/execute-one! conn query as-lower)))
+    (sql/format query format-opts)
+    (m conn query execute-opts)))
+
+(defn execute-one!
+  ([q conn] (-execute-something! jdbc/execute-one! q conn {} as-lower))
+  ([q conn format-opts execute-opts]
+   (-execute-something! jdbc/execute-one! q conn format-opts execute-opts)))
 
 (defn execute!
-  "Convenience wrapper around jdbc/execute, that provides honeysql formatting and sensible defaults.
-   Expects a honey-sql compatible query-map, and a something that can produce a db connection.
-   Optionally, provide format-opts to overwrite the defaults for honey-sql, and query-opts to overwrite the
-   defaults for jdbc/execute!."
-  ([q conn] (execute! q conn {} as-lower))
+  ([q conn] (-execute-something! jdbc/execute! q conn {} as-lower))
   ([q conn format-opts execute-opts]
-   (log/debug ::about-to-execute q)
-   (as-> q query
-     (medley/filter-kv drop-empty-where query)
-     (sql/format query format-opts)
-     (jdbc/execute! conn query execute-opts))))
+   (-execute-something! jdbc/execute! q conn format-opts execute-opts)))
 
 (defn edn->sql
   "Converts a declarative map of data to the sql commands required to create that data.
@@ -274,17 +277,18 @@
 
 ;; Mutations
 
+; What can go wrong:
+; Recipe name not unique
 (defn create-recipe
   [conn {:keys [equipment ingredients steps] :as recipe}]
   ; In a transaction:
   (jdbc/with-transaction [tx conn]
     ; Create the recipe
     (let [recipe-name (:name recipe)
-          recipe-id (-> {:select :id
-                         :from [[[:new-table
-                                  {:insert-into :recipes
-                                   :values [{:name recipe-name}]}]]]}
-                        (execute-one! tx)
+          recipe-id (-> {:insert-into :recipes
+                         :values [{:name recipe-name}]}
+                        (execute-one! tx {} (merge as-lower 
+                                                   {:return-keys true}))
                         :id)]
       
       ; Create all the RecipeIngredients
@@ -325,24 +329,71 @@
             (execute-one! tx)))
       (get-recipe-by-id tx recipe-id))))
 
+; What can go wrong:
+; Name is not unique
+; name is the empty string
 (defn create-ingredient
   [conn ingredient]
-  (let [{:keys [id]}
-        (-> {:select :id
-             :from [[[:new-table
-                      {:insert-into :ingredients
-                       :values [(select-keys
-                                  ingredient
-                                  [:name :unit_name :unit_name_plural])]}]]]}
-            (execute-one! conn))]
-    (assoc ingredient :id id)))
+  (try
+    (let [id (-> {:insert-into :ingredients
+                  :values [(select-keys
+                            ingredient
+                            [:name :unit_name :unit_name_plural])]}
+                 (execute-one! conn {} (merge as-lower
+                                              {:return-keys true}))
+                 :id)]
+      (assoc ingredient :id id))
+    (catch java.sql.SQLIntegrityConstraintViolationException _
+      (lacinia.resolve/resolve-as
+       nil {:message
+            "Cannot create multiple ingredients with the same name"}))))
 
+; What can go wrong:
+; name is not unique
+; name is the empty string
 (defn create-equipment
   [conn {:keys [name]}]
-  (let [{:keys [id]} (-> {:select :id
-                :from [[[:new-table
-                         {:insert-into :equipment
-                          :values [{:name name}]}]]]}
-               (execute-one! conn))]
-    {:id id
-     :name name}))
+  (try
+    (let [id (-> {:insert-into :equipment
+                  :values [{:name name}]}
+                 (execute-one! conn {} (merge as-lower
+                                              {:return-keys true}))
+                 :id)]
+      {:id id
+       :name name})
+    (catch java.sql.SQLIntegrityConstraintViolationException _
+      (lacinia.resolve/resolve-as
+       nil {:message
+            "Cannot create multiple items of equipment with the same name"}))))
+
+
+(defn edit-recipe [conn recipe]
+  (try
+    (-> {:update :recipes
+         :set (dissoc recipe :id)
+         :where [:= :id (:id recipe)]}
+        (execute-one! conn))
+    (catch java.sql.SQLIntegrityConstraintViolationException _
+      (lacinia.resolve/resolve-as
+       nil {:message
+            "A recipe with this name already exists"}))))
+
+(defn delete-recipe [conn id]
+  (try
+    (-> {:delete-from :recipes
+         :where [:= :id id]}
+        (execute-one! conn))
+    {:success true}
+    (catch java.sql.SQLIntegrityConstraintViolationException _
+      (lacinia.resolve/resolve-as
+       {:success false}
+       {:message
+        "A recipe with this name already exists"}))))
+(defn add-step [conn x]
+  (try (catch java.sql.SQLIntegrityConstraintViolationException _)))
+(defn edit-step [conn x]
+  (try (catch java.sql.SQLIntegrityConstraintViolationException _)))
+(defn delete-step [conn x]
+  (try (catch java.sql.SQLIntegrityConstraintViolationException _)))
+(defn edit-ingredient [conn x]
+  (try (catch java.sql.SQLIntegrityConstraintViolationException _)))

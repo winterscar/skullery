@@ -99,6 +99,36 @@
     (log/info :schema/add-equipment equipment)
     (db/create-equipment conn equipment)))
 
+(defn mutation-edit-recipe [conn]
+  (fn [_ {:keys [recipe]} _]
+    (log/info :schema/edit-recipe recipe)
+    (db/edit-recipe conn recipe)))
+
+(defn mutation-delete-recipe [conn]
+  (fn [_ {:keys [id]} _]
+    (log/info :schema/delete-recipe id)
+    (db/delete-recipe conn id)))
+
+(defn mutation-add-step [conn]
+  (fn [_ step _]
+    (log/info :schema/add-step step)
+    (db/add-step conn step)))
+
+(defn mutation-edit-step [conn]
+  (fn [_ {:keys [step]} _]
+    (log/info :schema/edit-step step)
+    (db/edit-step conn step)))
+
+(defn mutation-delete-step [conn]
+  (fn [_ step _]
+    (log/info :schema/delete-step step)
+    (db/delete-step conn step)))
+
+(defn mutation-edit-ingredient [conn]
+  (fn [_ {:keys [ingredient]} _]
+    (log/info :schema/edit-ingredient ingredient)
+    (db/edit-ingredient conn ingredient)))
+
 
 (defn compile-explain
   "Wraps schema/compile with expound, so that any spec errors
@@ -127,7 +157,13 @@
         ;; MUTATIONS
           :mutation-add-recipe (mutation-add-recipe conn)
           :mutation-add-ingredient (mutation-add-ingredient conn)
-          :mutation-add-equipment (mutation-add-equipment conn)})
+          :mutation-add-equipment (mutation-add-equipment conn)
+          :mutation-edit-recipe (mutation-edit-recipe conn)
+          :mutation-delete-recipe (mutation-delete-recipe conn)
+          :mutation-add-step (mutation-add-step conn)
+          :mutation-edit-step (mutation-edit-step conn)
+          :mutation-delete-step (mutation-delete-step conn)
+          :mutation-edit-ingredient (mutation-edit-ingredient conn)})
         compile-explain)))
 
 (defrecord Schema [schema database]

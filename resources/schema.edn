@@ -16,8 +16,10 @@
                                                 follow this page, if any.
                                                 You *must* discard this token if you change
                                                 the query filters or sort order."}}}
+           :DeleteSuccess {:description "Indicates the result of a delete operation."
+                           :fields {:success {:type Boolean}}}
            :Ingredient {:description "An ingredient."
-                        :fields {:id {:type Int}
+                        :fields {:id {:type (non-null Int)}
                                  :name {:type (non-null String)}
                                  :unit_name {:type String}
                                  :unit_name_plural {:type String}
@@ -71,9 +73,9 @@
                                         :page_info {:type (non-null :PageInfo)}
                                         :total_count {:type (non-null Int)}}}
            :EquipmentResult {:description "A paginated list of equipment and associated metadata."
-                               :fields {:values {:type (list :Equipment)}
-                                        :page_info {:type (non-null :PageInfo)}
-                                        :total_count {:type (non-null Int)}}}}
+                             :fields {:values {:type (list :Equipment)}
+                                      :page_info {:type (non-null :PageInfo)}
+                                      :total_count {:type (non-null Int)}}}}
  :queries {:recipe {:type :Recipe
                     :resolve :resolve-recipe
                     :args {:id {:type (non-null Int)}}}
@@ -102,38 +104,72 @@
                                                 :quantity {:type Float}}}
                  :StepInput {:fields {:name {:type String}
                                       :body {:type String}
-                                      :ingredients {:type (list :StepIngredientInput)}}}}
+                                      :ingredients {:type (list :StepIngredientInput)}}}
+                 :StepEditInput {:fields {:id {:type (non-null Int)}
+                                          :name {:type String}
+                                          :body {:type String}}}
+                 :RecipeEditInput {:fields {:id {:type (non-null Int)}
+                                            :name {:type String}}}
+                 :IngredientEditInput {:fields {:id {:type (non-null Int)}
+                                                :name {:type String}
+                                                :unit_name {:type String}
+                                                :unit_name_plural {:type String}}}}
  :mutations {:add_recipe {:type :Recipe
-                          :description "Creates a new recipe, along with associated ingredients and steps."
+                          :description "Create a new recipe, along with associated ingredients and steps."
                           :args {:name {:type String}
                                  :ingredients {:type (list :RecipeIngredientInput)}
                                  :equipment   {:type (list :RecipeEquipmentInput)}
                                  :steps {:type (list :StepInput)}}
                           :resolve :mutation-add-recipe}
              :add_ingredient {:type :Ingredient
-                               :description "Creates a new ingredient."
-                               :args {:name {:type (non-null String)}
-                                      :unit_name {:type String
-                                                  :description "The name of one of this ingredient. For example,
+                              :description "Create a new ingredient."
+                              :args {:name {:type (non-null String)}
+                                     :unit_name {:type String
+                                                 :description "The name of one of this ingredient. For example,
                                                                 the unit name for garlic would be 'clove', and
                                                                 the unit name for ontion would be 'onion'.
                                                                 Some ingredients have no concept of 'unit', in
                                                                 which case this field should be left blank."}
-                                      :unit_name_plural {:type String
-                                                         :description "The name of more than one unit of this ingredient."}}
-                               :resolve :mutation-add-ingredient}
+                                     :unit_name_plural {:type String
+                                                        :description "The name of more than one unit of this ingredient."}}
+                              :resolve :mutation-add-ingredient}
              :add_equipment   {:type :Equipment
-                               :description "Creates a new item of equipment."
+                               :description "Create a new item of equipment."
                                :args {:name {:type (non-null String)}}
-                               :resolve :mutation-add-equipment}}}
+                               :resolve :mutation-add-equipment}
 
-;; :mutations {:add-recipe nil
+             :edit_recipe   {:type :Recipe
+                             :description "Update a recipe metadata by ID."
+                             :args {:recipe {:type :RecipeEditInput}}
+                             :resolve :mutation-edit-recipe}
+             :delete_recipe {:type :DeleteSuccess
+                             :description "Delete a recipe by ID."
+                             :args {:id {:type (non-null Int)}}
+                             :resolve :mutation-delete-recipe}
+             :add_step      {:type :Step
+                             :description "Add steps to an existing recipe, specified by ID."
+                             :args {:step {:type (non-null :StepInput)}
+                                    :recipe_id {:type (non-null Int)}}
+                             :resolve :mutation-add-step}
+             :edit_step     {:type :Step
+                             :description "Update a step by ID."
+                             :args {:step {:type (non-null :StepEditInput)}}
+                             :resolve :mutation-edit-step}
+             :delete_step   {:type :DeleteSuccess
+                             :description "Deletes a step by ID. Re-orders subsequent steps."
+                             :args {:id {:type (non-null Int)}}
+                             :resolve :mutation-delete-step}
+             :edit_ingredient {:type :Ingredient
+                               :description "Updates an ingredient by ID."
+                               :args {:ingredient {:type :IngredientEditInput}}
+                               :resolve :mutation-edit-ingredient}}}
+
+;; :mutations {
 ;;             :edit-recipe   nil
 ;;             :delete-recipe nil
 ;;             :add-steps      nil
 ;;             :edit-step     nil
 ;;             :delete-step   nil
-;;             :add-ingredients nil
 ;;             :edit-ingredient nil
 ;;             :delete-ingredient nil
 ;;             :add-recipe-ingredients nil
@@ -142,7 +178,6 @@
 ;;             :add-step-ingredients nil
 ;;             :edit-step-ingredient nil
 ;;             :delete-step-ingredient nil
-;;             :add-equipment nil
 ;;             :edit-equipment nil
 ;;             :delete-equipment nil
 ;;             :add-recipe-equipment nil
